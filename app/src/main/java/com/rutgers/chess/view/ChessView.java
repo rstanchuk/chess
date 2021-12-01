@@ -21,21 +21,10 @@ public class ChessView extends View {
     private void createBoard(Canvas canvas) {
         Paint paint = new Paint();
         for(int i=0;i<8;i++)
-        {
             for(int j=0;j<8;j++) {
-                if(i%2==0)
-                    if(j%2==0)
-                       paint.setColor(Color.LTGRAY);
-                    else
-                        paint.setColor(Color.DKGRAY);
-                else
-                    if(j%2==0)
-                        paint.setColor(Color.DKGRAY);
-                    else
-                        paint.setColor(Color.LTGRAY);
+                paint.setColor((i%2==0)?(j%2==0)?Color.LTGRAY:Color.DKGRAY:(j%2==0)?Color.DKGRAY:Color.LTGRAY);
                 canvas.drawRect(originX+ i*squareLength,originY+ j*squareLength,originX+(i+1)*squareLength,originY+(j+1)*squareLength,paint);
             }
-        }
     }
     @Override
     protected void onDraw(Canvas canvas) {
