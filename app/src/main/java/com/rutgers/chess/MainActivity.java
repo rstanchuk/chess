@@ -3,7 +3,6 @@ package com.rutgers.chess;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.view.Menu;
 
 import com.rutgers.chess.view.ChessView;
 
