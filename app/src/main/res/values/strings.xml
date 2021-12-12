@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">chess</string>
+    <string name="undo_button">Undo</string>
+    <string name="ai_button">AI</string>
+    <string name="draw_button">Draw</string>
+    <string name="resign_button">Resign</string>
 </resources>

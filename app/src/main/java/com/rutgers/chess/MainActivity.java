@@ -4,14 +4,22 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.rutgers.chess.view.ChessView;
 
 public class MainActivity extends AppCompatActivity {
-
+    private final String TAG = "MainActivity";
     ChessView chessView;
     private static MainActivity instance;
+
+    private Button undoButton;
+    private Button aiButton;
+    private Button drawButton;
+    private Button resignButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +28,34 @@ public class MainActivity extends AppCompatActivity {
         //chessView = new ChessView(this);
         //setContentView(chessView);
         instance = this;
+
+        undoButton = findViewById(R.id.undo_button);
+        undoButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Log.d(TAG, "hello1");
+            }
+        });
+
+        aiButton = findViewById(R.id.ai_button);
+        aiButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Log.d(TAG, "hello2");
+            }
+        });
+
+        drawButton = findViewById(R.id.draw_button);
+        drawButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Log.d(TAG, "hello3");
+            }
+        });
+
+        resignButton = findViewById(R.id.resign_button);
+        resignButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Log.d(TAG, "hello4");
+            }
+        });
     }
     public static MainActivity getInstance() {
         return instance;
