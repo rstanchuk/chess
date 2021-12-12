@@ -45,9 +45,10 @@ public class ChessView extends View {
 
     private int fromCol = -1;
     private int fromRow = -1;
+    private int movingPiece = -1;
+
     private float movingPieceX = -1;
     private float movingPieceY = -1;
-    private int movingPiece = 0;
 
     boolean isWhiteMove = true;
 
@@ -56,37 +57,40 @@ public class ChessView extends View {
         //start pieces
 
         ChessBoard[0][0] = R.drawable.chess_rdt60;
-        ChessBoard[1][0] = R.drawable.chess_ndt60;
-        ChessBoard[2][0] = R.drawable.chess_bdt60;
-        ChessBoard[3][0] = R.drawable.chess_qdt60;
-        ChessBoard[4][0] = R.drawable.chess_kdt60;
-        ChessBoard[5][0] = R.drawable.chess_bdt60;
-        ChessBoard[6][0] = R.drawable.chess_ndt60;
-        ChessBoard[7][0] = R.drawable.chess_rdt60;
-        ChessBoard[0][1] = R.drawable.chess_pdt60;
+        ChessBoard[0][1] = R.drawable.chess_ndt60;
+        ChessBoard[0][2] = R.drawable.chess_bdt60;
+        ChessBoard[0][3] = R.drawable.chess_qdt60;
+        ChessBoard[0][4] = R.drawable.chess_kdt60;
+        ChessBoard[0][5] = R.drawable.chess_bdt60;
+        ChessBoard[0][6] = R.drawable.chess_ndt60;
+        ChessBoard[0][7] = R.drawable.chess_rdt60;
+
+        ChessBoard[1][0] = R.drawable.chess_pdt60;
         ChessBoard[1][1] = R.drawable.chess_pdt60;
-        ChessBoard[2][1] = R.drawable.chess_pdt60;
-        ChessBoard[3][1] = R.drawable.chess_pdt60;
-        ChessBoard[4][1] = R.drawable.chess_pdt60;
-        ChessBoard[5][1] = R.drawable.chess_pdt60;
-        ChessBoard[6][1] = R.drawable.chess_pdt60;
-        ChessBoard[7][1] = R.drawable.chess_pdt60;
-        ChessBoard[0][7] = R.drawable.chess_rlt60;
-        ChessBoard[1][7] = R.drawable.chess_nlt60;
-        ChessBoard[2][7] = R.drawable.chess_blt60;
-        ChessBoard[3][7] = R.drawable.chess_qlt60;
-        ChessBoard[4][7] = R.drawable.chess_klt60;
-        ChessBoard[5][7] = R.drawable.chess_blt60;
-        ChessBoard[6][7] = R.drawable.chess_nlt60;
+        ChessBoard[1][2] = R.drawable.chess_pdt60;
+        ChessBoard[1][3] = R.drawable.chess_pdt60;
+        ChessBoard[1][4] = R.drawable.chess_pdt60;
+        ChessBoard[1][5] = R.drawable.chess_pdt60;
+        ChessBoard[1][6] = R.drawable.chess_pdt60;
+        ChessBoard[1][7] = R.drawable.chess_pdt60;
+
+        ChessBoard[7][0] = R.drawable.chess_rlt60;
+        ChessBoard[7][1] = R.drawable.chess_nlt60;
+        ChessBoard[7][2] = R.drawable.chess_blt60;
+        ChessBoard[7][3] = R.drawable.chess_qlt60;
+        ChessBoard[7][4] = R.drawable.chess_klt60;
+        ChessBoard[7][5] = R.drawable.chess_blt60;
+        ChessBoard[7][6] = R.drawable.chess_nlt60;
         ChessBoard[7][7] = R.drawable.chess_rlt60;
-        ChessBoard[0][6] = R.drawable.chess_plt60;
-        ChessBoard[1][6] = R.drawable.chess_plt60;
-        ChessBoard[2][6] = R.drawable.chess_plt60;
-        ChessBoard[3][6] = R.drawable.chess_plt60;
-        ChessBoard[4][6] = R.drawable.chess_plt60;
-        ChessBoard[5][6] = R.drawable.chess_plt60;
+
+        ChessBoard[6][0] = R.drawable.chess_plt60;
+        ChessBoard[6][1] = R.drawable.chess_plt60;
+        ChessBoard[6][2] = R.drawable.chess_plt60;
+        ChessBoard[6][3] = R.drawable.chess_plt60;
+        ChessBoard[6][4] = R.drawable.chess_plt60;
+        ChessBoard[6][5] = R.drawable.chess_plt60;
         ChessBoard[6][6] = R.drawable.chess_plt60;
-        ChessBoard[7][6] = R.drawable.chess_plt60;
+        ChessBoard[6][7] = R.drawable.chess_plt60;
 
         chess.Board.createBoard();
     }
@@ -286,8 +290,17 @@ public class ChessView extends View {
             case MotionEvent.ACTION_DOWN:
                 fromCol = (int) (Math.floor(((event.getX() - originX) / squareLength)));
                 fromRow = (int) (Math.floor(((event.getY() - originY) / squareLength)));
+                //int selectedRow = (int)(movingPieceY - originY)/squareLength;
+                //int selectedCol = (int)(movingPieceX - originX)/squareLength;
+                //Log.d(TAG,"(x,y) "+ (int)(movingPieceX - originX)/squareLength + "," + (int)(movingPieceY - originY)/squareLength );
+
+                if(fromRow < 8 && fromCol < 8)
+                movingPiece = ChessBoard[fromRow][fromCol];
                 break;
             case MotionEvent.ACTION_MOVE:
+                movingPieceX = event.getX();
+                movingPieceY = event.getY();
+                invalidate();
 
                 break;
             case MotionEvent.ACTION_UP:
@@ -301,23 +314,26 @@ public class ChessView extends View {
                 if (isWhiteMove) {
                     if (executeMove(move, "w")) {
                         isWhiteMove = false;
-                        int piece = ChessBoard[fromCol][fromRow];
-                        ChessBoard[fromCol][fromRow] = 0;
-                        ChessBoard[col][row] = piece;
+                        int piece = ChessBoard[fromRow][fromCol];
+                        ChessBoard[fromRow] [fromCol]= 0;
+                        ChessBoard[row][col] = piece;
                         Log.d(TAG, move);
+                        movingPiece = piece;
+
                         invalidate();
                     }
                 } else {
                     if (executeMove(move, "b")) {
                         isWhiteMove = true;
-                        int piece = ChessBoard[fromCol][fromRow];
-                        ChessBoard[fromCol][fromRow] = 0;
-                        ChessBoard[col][row] = piece;
+                        int piece = ChessBoard[fromRow][fromCol];
+                        movingPiece = piece;
+                        ChessBoard[fromRow][fromCol] = 0;
+                        ChessBoard[row] [col]= piece;
                         Log.d(TAG, move);
-                        invalidate();
+                       invalidate();
                     }
                 }
-
+                movingPiece=-1;
                 break;
         }
         return true;
@@ -337,12 +353,26 @@ public class ChessView extends View {
     private void drawPieces(Canvas canvas) {
         for(int x = 0; x < 8; x++) {
             for(int y = 0; y < 8; y++) {
-                if(ChessBoard[x][y] != 0) {
-                    drawPieceAt(canvas, x, y, ChessBoard[x][y]);
+                if(ChessBoard[y][x]!= 0) {
+                   drawPieceAt(canvas, x, y, ChessBoard[y][x]);
                 }
             }
         }
+        if(movingPiece!=0) {
+            //Log.d(TAG,"Moving Piece: " + movingPiece);
+            //Bitmap bitmap = bitmaps.get(movingPiece);
+
+            Log.d(TAG,"(x,y) "+ (int)(movingPieceX - originX)/squareLength + "," + (int)(movingPieceY - originY)/squareLength );
+
+            Bitmap bitmap = bitmaps.get(movingPiece);
+            if(bitmap!=null)
+            canvas.drawBitmap(bitmap, null, new Rect((int)(movingPieceX - squareLength/2), (int)(movingPieceY-squareLength/2), (int)(movingPieceX + squareLength/2),(int)(movingPieceY + squareLength/2)), paint);
+
+        }
+
+
     }
+
 
     private void drawPieceAt(Canvas canvas,  int file, int rank, int pieceKey) {
         Bitmap  piece = bitmaps.get(pieceKey);
