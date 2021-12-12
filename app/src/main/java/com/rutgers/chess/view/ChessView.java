@@ -173,7 +173,7 @@ public class ChessView extends View {
             } else {
                // chess.Board.printIllegalMove();
                // Log.d("error","Illegal move");
-
+                Log.d("Illegal","1");
                 MainActivity.getInstance().printIllegalMove();
                 return false;
             }
@@ -227,12 +227,16 @@ public class ChessView extends View {
                 boolean isMoving = chess.Board.move(originCol, originRow, destinationCol, destinationRow, playerName, null);
               //  if(!isMoving) chess.Board.printIllegalMove();
 
-                if(!isMoving)  MainActivity.getInstance().printIllegalMove();
+                if(!isMoving)  {
+                    Log.d("Illegal","2");
+                    MainActivity.getInstance().printIllegalMove();
+                }
 
                 return isMoving;
 
             } else {
                 //chess.Board.printIllegalMove();
+                Log.d("Illegal","3");
                 MainActivity.getInstance().printIllegalMove();
                 return false;
             }
@@ -255,18 +259,24 @@ public class ChessView extends View {
                 if(playerName=="w" && destinationRow==0) {
                     boolean isMoving = chess.Board.move(originCol, originRow, destinationCol, destinationRow, playerName, move.substring(6));
                     //if(!isMoving) chess.Board.printIllegalMove();
-                    if(!isMoving)  MainActivity.getInstance().printIllegalMove();
-
+                    if(!isMoving) {
+                        Log.d("Illegal","4");
+                        MainActivity.getInstance().printIllegalMove();
+                    }
                     return isMoving;
                 }
                 if(playerName=="b" && destinationRow==7) {
                     boolean isMoving = chess.Board.move(originCol, originRow, destinationCol, destinationRow, playerName, move.substring(6));
                     //if(!isMoving) chess.Board.printIllegalMove();
-                    if(!isMoving)  MainActivity.getInstance().printIllegalMove();
+                    if(!isMoving)  {
+                        Log.d("Illegal","5");
+                        MainActivity.getInstance().printIllegalMove();
+                    }
                     return isMoving;
 
                 }
                 else {
+                    Log.d("Illegal","6");
                     MainActivity.getInstance().printIllegalMove();
                     //chess.Board.printIllegalMove();
                     return false;
@@ -274,6 +284,7 @@ public class ChessView extends View {
 
 
             } else {
+                Log.d("Illegal","7");
                 MainActivity.getInstance().printIllegalMove();
                 //chess.Board.printIllegalMove();
                 return false;
@@ -290,6 +301,7 @@ public class ChessView extends View {
         else
         {
             //chess.Board.printIllegalMove();
+            Log.d("Illegal","8");
             MainActivity.getInstance().printIllegalMove();
             return false;
         }
