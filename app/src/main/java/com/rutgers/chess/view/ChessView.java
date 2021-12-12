@@ -163,13 +163,15 @@ public class ChessView extends View {
         return fromColA+""+(8-fromRow)+" "+toColA+(8-toRow);
     }
 
-    private static boolean draw = false;
+    public static boolean draw = false;
 
     public static boolean executeMove(String move, String playerName) {
 
         if (draw == true) {
             if (move.equals("draw")) {
-                System.exit(0);
+                //System.exit(0);
+                MainActivity.getInstance().printDraw();
+                return true;
             } else {
                // chess.Board.printIllegalMove();
                // Log.d("error","Illegal move");

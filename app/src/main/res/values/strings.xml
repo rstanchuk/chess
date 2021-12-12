@@ -4,4 +4,7 @@
     <string name="ai_button">AI</string>
     <string name="draw_button">Draw</string>
     <string name="resign_button">Resign</string>
+    <string name="dialog_draw">Draw?</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 </resources>
