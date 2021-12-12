@@ -53,7 +53,14 @@ public class MainActivity extends AppCompatActivity {
         resignButton = findViewById(R.id.resign_button);
         resignButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Log.d(TAG, "hello4");
+                ChessView cv  = findViewById(R.id.chess_view);
+                Log.d(TAG, cv.isWhiteMove+"");
+                if(cv.isWhiteMove) {
+                    cv.executeMove("resign", "w");
+                } else {
+                    cv.executeMove("resign", "b");
+                }
+
             }
         });
     }
@@ -69,6 +76,21 @@ public class MainActivity extends AppCompatActivity {
         toast.show();
     }
 
+    public void printWhiteWins() {
+        Context context = getApplicationContext();
+        CharSequence text = "White wins";
+        int duration = Toast.LENGTH_SHORT;
 
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
 
+    public void printBlackWins() {
+        Context context = getApplicationContext();
+        CharSequence text = "Black wins";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
 }

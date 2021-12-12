@@ -52,7 +52,7 @@ public class ChessView extends View {
     private float movingPieceX = -1;
     private float movingPieceY = -1;
 
-    boolean isWhiteMove = true;
+    public boolean isWhiteMove = true;
 
     public ChessView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -182,11 +182,14 @@ public class ChessView extends View {
 
         if (move.trim().equals("resign")) {
             if (playerName.equals("w")) {
-                System.out.println("Black wins");
+                //System.out.println("Black wins");
+                MainActivity.getInstance().printBlackWins();
             } else {
-                System.out.println("White wins");
+                //System.out.println("White wins");
+                MainActivity.getInstance().printWhiteWins();
             }
-            System.exit(0);
+            //System.exit(0);
+            return true;
         }
 
         HashMap<String, Integer> cols = new HashMap<String, Integer>();
