@@ -12,9 +12,11 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.rutgers.chess.MainActivity;
 import com.rutgers.chess.R;
 
 import java.util.HashMap;
@@ -164,11 +166,15 @@ public class ChessView extends View {
     private static boolean draw = false;
 
     public static boolean executeMove(String move, String playerName) {
+
         if (draw == true) {
             if (move.equals("draw")) {
                 System.exit(0);
             } else {
-                chess.Board.printIllegalMove();
+               // chess.Board.printIllegalMove();
+               // Log.d("error","Illegal move");
+
+                MainActivity.getInstance().printIllegalMove();
                 return false;
             }
 
@@ -219,11 +225,15 @@ public class ChessView extends View {
 
 
                 boolean isMoving = chess.Board.move(originCol, originRow, destinationCol, destinationRow, playerName, null);
-                if(!isMoving) chess.Board.printIllegalMove();
+              //  if(!isMoving) chess.Board.printIllegalMove();
+
+                if(!isMoving)  MainActivity.getInstance().printIllegalMove();
+
                 return isMoving;
 
             } else {
-                chess.Board.printIllegalMove();
+                //chess.Board.printIllegalMove();
+                MainActivity.getInstance().printIllegalMove();
                 return false;
             }
         } else
@@ -244,23 +254,28 @@ public class ChessView extends View {
 
                 if(playerName=="w" && destinationRow==0) {
                     boolean isMoving = chess.Board.move(originCol, originRow, destinationCol, destinationRow, playerName, move.substring(6));
-                    if(!isMoving) chess.Board.printIllegalMove();
+                    //if(!isMoving) chess.Board.printIllegalMove();
+                    if(!isMoving)  MainActivity.getInstance().printIllegalMove();
+
                     return isMoving;
                 }
                 if(playerName=="b" && destinationRow==7) {
                     boolean isMoving = chess.Board.move(originCol, originRow, destinationCol, destinationRow, playerName, move.substring(6));
-                    if(!isMoving) chess.Board.printIllegalMove();
+                    //if(!isMoving) chess.Board.printIllegalMove();
+                    if(!isMoving)  MainActivity.getInstance().printIllegalMove();
                     return isMoving;
 
                 }
                 else {
-                    chess.Board.printIllegalMove();
+                    MainActivity.getInstance().printIllegalMove();
+                    //chess.Board.printIllegalMove();
                     return false;
                 }
 
 
             } else {
-                chess.Board.printIllegalMove();
+                MainActivity.getInstance().printIllegalMove();
+                //chess.Board.printIllegalMove();
                 return false;
             }
         } else
@@ -274,7 +289,8 @@ public class ChessView extends View {
 
         else
         {
-            chess.Board.printIllegalMove();
+            //chess.Board.printIllegalMove();
+            MainActivity.getInstance().printIllegalMove();
             return false;
         }
 
@@ -320,7 +336,7 @@ public class ChessView extends View {
                         Log.d(TAG, move);
                         movingPiece = piece;
 
-                        invalidate();
+                       // invalidate();
                     }
                 } else {
                     if (executeMove(move, "b")) {
@@ -330,9 +346,10 @@ public class ChessView extends View {
                         ChessBoard[fromRow][fromCol] = 0;
                         ChessBoard[row] [col]= piece;
                         Log.d(TAG, move);
-                       invalidate();
+                      // invalidate();
                     }
                 }
+                invalidate();
                 movingPiece=-1;
                 break;
         }
@@ -362,7 +379,7 @@ public class ChessView extends View {
             //Log.d(TAG,"Moving Piece: " + movingPiece);
             //Bitmap bitmap = bitmaps.get(movingPiece);
 
-            Log.d(TAG,"(x,y) "+ (int)(movingPieceX - originX)/squareLength + "," + (int)(movingPieceY - originY)/squareLength );
+            //Log.d(TAG,"(x,y) "+ (int)(movingPieceX - originX)/squareLength + "," + (int)(movingPieceY - originY)/squareLength );
 
             Bitmap bitmap = bitmaps.get(movingPiece);
             if(bitmap!=null)
@@ -380,10 +397,12 @@ public class ChessView extends View {
     }
 
     private void loadPieceImages() {
-        for(int i=0;i<pieceKeys.length;i++) {
-            bitmaps.put(pieceKeys[i],BitmapFactory.decodeResource(res, pieceKeys[i]));
+        for (int i = 0; i < pieceKeys.length; i++) {
+            bitmaps.put(pieceKeys[i], BitmapFactory.decodeResource(res, pieceKeys[i]));
         }
     }
+
+
 
 
 }
