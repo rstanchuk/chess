@@ -36,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
         undoButton = findViewById(R.id.undo_button);
         undoButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Log.d(TAG, "hello1");
+                ChessView cv  = findViewById(R.id.chess_view);
+                cv.undo();
             }
         });
 
@@ -79,8 +80,6 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     cv.executeMove("resign", "b");
                 }
-
-                //prompt user for save
             }
         });
     }

@@ -9,6 +9,7 @@ package chess;
 public class Board {
 
 	private static Square[][] square = new Square[8][8];
+
 	private static boolean isWhiteCheckmate = false;
 	private static boolean isBlackCheckmate = false;
 	private static boolean isWhiteCheck = false;

@@ -44,6 +44,7 @@ public class ChessView extends View {
     HashMap<Integer, Bitmap> bitmaps = new HashMap<Integer, Bitmap>();
 
     private int[][] ChessBoard = new int[8][8];
+    private int[][] prevChessBoard = new int[8][8];
 
     private int fromCol = -1;
     private int fromRow = -1;
@@ -51,6 +52,9 @@ public class ChessView extends View {
 
     private float movingPieceX = -1;
     private float movingPieceY = -1;
+
+    //for undo
+    private chess.Square[][] square;
 
     public boolean isWhiteMove = true;
 
@@ -341,8 +345,9 @@ public class ChessView extends View {
                 int row = (int) Math.floor(((event.getY() - originY) / squareLength));
                 //Log.d(TAG, "from (" + fromCol + ", " + fromRow + ") to (" + col + ", " + row + ")\n");
 
-
                 String move = getMove(fromCol, fromRow, col, row);
+
+                prevChessBoard = copyChessBoard(ChessBoard);
 
                 if (isWhiteMove) {
                     if (executeMove(move, "w")) {
@@ -352,8 +357,6 @@ public class ChessView extends View {
                         ChessBoard[row][col] = piece;
                         Log.d(TAG, move);
                         movingPiece = piece;
-
-                       // invalidate();
                     }
                 } else {
                     if (executeMove(move, "b")) {
@@ -363,7 +366,6 @@ public class ChessView extends View {
                         ChessBoard[fromRow][fromCol] = 0;
                         ChessBoard[row] [col]= piece;
                         Log.d(TAG, move);
-                      // invalidate();
                     }
                 }
                 invalidate();
@@ -403,8 +405,6 @@ public class ChessView extends View {
             canvas.drawBitmap(bitmap, null, new Rect((int)(movingPieceX - squareLength/2), (int)(movingPieceY-squareLength/2), (int)(movingPieceX + squareLength/2),(int)(movingPieceY + squareLength/2)), paint);
 
         }
-
-
     }
 
 
@@ -419,7 +419,17 @@ public class ChessView extends View {
         }
     }
 
+    private int[][] copyChessBoard(int[][] matrix) {
+        int [][] myInt = new int[matrix.length][];
+        for(int i = 0; i < matrix.length; i++)
+            myInt[i] = matrix[i].clone();
 
+        return myInt;
+    }
 
-
+    public void undo() {
+        ChessBoard = copyChessBoard(prevChessBoard);
+        invalidate();
+        isWhiteMove = !isWhiteMove;
+    }
 }
