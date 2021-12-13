@@ -172,9 +172,6 @@ public class ChessView extends View {
     public static boolean draw = false;
     private static boolean aiMove = false;
 
-//    private static int fromColAI = 0;
-//    private static int fromRowAI = 0;
-
     public void executeAImove() {
         aiMove = true;
 
