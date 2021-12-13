@@ -22,7 +22,9 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.rutgers.chess.MainActivity;
 import com.rutgers.chess.R;
+import com.rutgers.chess.Util.ChessMove;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ChessView extends View {
@@ -63,6 +65,8 @@ public class ChessView extends View {
     private chess.Square[][] square;
 
     public static boolean isWhiteMove = true;
+
+    public ArrayList<ChessMove> save = new ArrayList<ChessMove>();
 
     public ChessView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -201,6 +205,7 @@ public class ChessView extends View {
                         fromR != r && executeMove(move, (isWhiteMove ? "w" : "b"))) {
                     prevChessBoard = copyChessBoard(ChessBoard);
                     Log.d(TAG, move);
+                    save.add(new ChessMove(fromC, fromR, c, r, isWhiteMove ? "w" : "b"));
                     isWhiteMove = !isWhiteMove;
                     int piece = ChessBoard[fromR][fromC];
                     ChessBoard[fromR][fromC] = 0;
@@ -208,6 +213,8 @@ public class ChessView extends View {
                     invalidate();
                     aiMove = false;
                     firstMove = false;
+
+
 
                     chess.Board.checkmate();
 
@@ -453,6 +460,8 @@ public class ChessView extends View {
                                 ChessBoard[row][col] = piece;
                                 Log.d(TAG, move);
                                 movingPiece = piece;
+
+                                save.add(new ChessMove(fromCol, fromRow, col, row, "w"));
                             }
                         } else {
                             if (executeMove(move, "b")) {
@@ -463,6 +472,8 @@ public class ChessView extends View {
                                 ChessBoard[fromRow][fromCol] = 0;
                                 ChessBoard[row] [col]= piece;
                                 Log.d(TAG, move);
+
+                                save.add(new ChessMove(fromCol, fromRow, col, row, "b"));
                             }
                         }
 
@@ -563,6 +574,7 @@ public class ChessView extends View {
         chess.Board.undo();
         if(firstMove != true) {
             isWhiteMove = !isWhiteMove;
+            save.remove(save.size()-1);
         }
 
         run = true;

@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.rutgers.chess.Util.ChessMove;
 import com.rutgers.chess.view.ChessView;
 
 public class MainActivity extends AppCompatActivity {
@@ -65,8 +66,15 @@ public class MainActivity extends AppCompatActivity {
                                 cv.draw = true;
                                 if(cv.isWhiteMove) {
                                     cv.executeMove("draw", "w");
+                                    ChessMove cm = new ChessMove("w");
+                                    cm.setDraw();
+                                    cv.save.add(cm);
+
                                 } else {
                                     cv.executeMove("draw", "b");
+                                    ChessMove cm = new ChessMove("b");
+                                    cm.setDraw();
+                                    cv.save.add(cm);
                                 }
                             }
                         })
@@ -82,8 +90,14 @@ public class MainActivity extends AppCompatActivity {
                 ChessView cv  = findViewById(R.id.chess_view);
                 if(cv.isWhiteMove) {
                     cv.executeMove("resign", "w");
+                    ChessMove cm = new ChessMove("w");
+                    cm.setResign();
+                    cv.save.add(cm);
                 } else {
                     cv.executeMove("resign", "b");
+                    ChessMove cm = new ChessMove("b");
+                    cm.setResign();
+                    cv.save.add(cm);
                 }
             }
         });
