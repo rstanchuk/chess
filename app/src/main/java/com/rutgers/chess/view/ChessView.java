@@ -186,52 +186,61 @@ public class ChessView extends View {
 
         int squares = 10000;
         int i = 0;
-        while (i < squares) {
-            fromC = (int) (Math.random() * 8);
-            fromR = (int) (Math.random() * 8);
-            c = (int) (Math.random() * 8);
-            r = (int) (Math.random() * 8);
 
-            String move = getMove(fromC, fromR, c, r);
-            if (ChessBoard[fromC][fromR] != 0 && fromC != c &&
-                    fromR != r && executeMove(move, (isWhiteMove ? "w" : "b"))) {
-                prevChessBoard = copyChessBoard(ChessBoard);
-                Log.d(TAG, move);
-                isWhiteMove = !isWhiteMove;
-                int piece = ChessBoard[fromR][fromC];
-                ChessBoard[fromR] [fromC]= 0;
-                ChessBoard[r][c] = piece;
-                invalidate();
-                aiMove = false;
-                firstMove = false;
+        if(run) {
 
-                chess.Board.checkmate();
 
-                if(chess.Board.isWhiteCheckmate() || chess.Board.isBlackCheckmate()) {
-                    //System.out.println("Checkmate");
-                    MainActivity.getInstance().printCheckmate();
+            while (i < squares) {
+                fromC = (int) (Math.random() * 8);
+                fromR = (int) (Math.random() * 8);
+                c = (int) (Math.random() * 8);
+                r = (int) (Math.random() * 8);
 
-                    if (chess.Board.isBlackCheckmate()) {
-                        //System.out.println("White wins");
-                        //System.exit(0);
-                        MainActivity.getInstance().printWhiteWins();
+                String move = getMove(fromC, fromR, c, r);
+                if (ChessBoard[fromC][fromR] != 0 && fromC != c &&
+                        fromR != r && executeMove(move, (isWhiteMove ? "w" : "b"))) {
+                    prevChessBoard = copyChessBoard(ChessBoard);
+                    Log.d(TAG, move);
+                    isWhiteMove = !isWhiteMove;
+                    int piece = ChessBoard[fromR][fromC];
+                    ChessBoard[fromR][fromC] = 0;
+                    ChessBoard[r][c] = piece;
+                    invalidate();
+                    aiMove = false;
+                    firstMove = false;
+
+                    chess.Board.checkmate();
+
+                    if (chess.Board.isWhiteCheckmate() || chess.Board.isBlackCheckmate()) {
+                        //System.out.println("Checkmate");
+                        MainActivity.getInstance().printCheckmate();
+
+                        if (chess.Board.isBlackCheckmate()) {
+                            //System.out.println("White wins");
+                            //System.exit(0);
+                            MainActivity.getInstance().printWhiteWins();
+                        } else if (chess.Board.isWhiteCheckmate()) {
+                            //System.out.println("Black wins");
+                            //System.exit(0);
+                            MainActivity.getInstance().printBlackWins();
+                        }
+
+                        run = false;
+                        aiMove = false;
+                        return;
                     }
-                    else if (chess.Board.isWhiteCheckmate()) {
-                        //System.out.println("Black wins");
-                        //System.exit(0);
-                        MainActivity.getInstance().printBlackWins();
+                    if (chess.Board.isWhiteCheck() || chess.Board.isBlackCheck()) {
+                        //System.out.println("Check");
+                        MainActivity.getInstance().printCheck();
+
                     }
-                }
-                if(chess.Board.isWhiteCheck() || chess.Board.isBlackCheck() ) {
-                    //System.out.println("Check");
-                    MainActivity.getInstance().printCheck();
 
+                    return;
                 }
 
-                return;
+                i++;
             }
 
-            i++;
         }
 
         aiMove = false;
@@ -398,90 +407,97 @@ public class ChessView extends View {
 
     }
 
+    private boolean run = true;
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if(event == null) {
             return false;
         }
-        switch(event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                fromCol = (int) (Math.floor(((event.getX() - originX) / squareLength)));
-                fromRow = (int) (Math.floor(((event.getY() - originY) / squareLength)));
-                //int selectedRow = (int)(movingPieceY - originY)/squareLength;
-                //int selectedCol = (int)(movingPieceX - originX)/squareLength;
-                //Log.d(TAG,"(x,y) "+ (int)(movingPieceX - originX)/squareLength + "," + (int)(movingPieceY - originY)/squareLength );
+        if(run) {
+            switch(event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    fromCol = (int) (Math.floor(((event.getX() - originX) / squareLength)));
+                    fromRow = (int) (Math.floor(((event.getY() - originY) / squareLength)));
+                    //int selectedRow = (int)(movingPieceY - originY)/squareLength;
+                    //int selectedCol = (int)(movingPieceX - originX)/squareLength;
+                    //Log.d(TAG,"(x,y) "+ (int)(movingPieceX - originX)/squareLength + "," + (int)(movingPieceY - originY)/squareLength );
 
-                if(fromRow < 8 && fromCol < 8)
-                movingPiece = ChessBoard[fromRow][fromCol];
-                break;
-            case MotionEvent.ACTION_MOVE:
-                movingPieceX = event.getX();
-                movingPieceY = event.getY();
-                invalidate();
+                    if(fromRow < 8 && fromCol < 8)
+                        movingPiece = ChessBoard[fromRow][fromCol];
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    movingPieceX = event.getX();
+                    movingPieceY = event.getY();
+                    invalidate();
 
-                break;
-            case MotionEvent.ACTION_UP:
-                int col = (int) Math.floor((event.getX() - originX) / squareLength);
-                int row = (int) Math.floor(((event.getY() - originY) / squareLength));
-                //Log.d(TAG, "from (" + fromCol + ", " + fromRow + ") to (" + col + ", " + row + ")\n");
+                    break;
+                case MotionEvent.ACTION_UP:
+                    int col = (int) Math.floor((event.getX() - originX) / squareLength);
+                    int row = (int) Math.floor(((event.getY() - originY) / squareLength));
+                    //Log.d(TAG, "from (" + fromCol + ", " + fromRow + ") to (" + col + ", " + row + ")\n");
 
-                String move = getMove(fromCol, fromRow, col, row);
+                    String move = getMove(fromCol, fromRow, col, row);
 
-                prevChessBoard = copyChessBoard(ChessBoard);
+                    prevChessBoard = copyChessBoard(ChessBoard);
 
-                if(fromRow>-1 && fromRow<8 && fromCol > -1 && fromCol < 8 && ChessBoard[fromRow][fromCol] !=0) {
-                    if (isWhiteMove) {
-                        if (executeMove(move, "w")) {
-                            firstMove = false;
-                            isWhiteMove = false;
-                            int piece = ChessBoard[fromRow][fromCol];
-                            ChessBoard[fromRow] [fromCol]= 0;
-                            ChessBoard[row][col] = piece;
-                            Log.d(TAG, move);
-                            movingPiece = piece;
+                    if(fromRow>-1 && fromRow<8 && fromCol > -1 && fromCol < 8 && ChessBoard[fromRow][fromCol] !=0) {
+                        if (isWhiteMove) {
+                            if (executeMove(move, "w")) {
+                                firstMove = false;
+                                isWhiteMove = false;
+                                int piece = ChessBoard[fromRow][fromCol];
+                                ChessBoard[fromRow] [fromCol]= 0;
+                                ChessBoard[row][col] = piece;
+                                Log.d(TAG, move);
+                                movingPiece = piece;
+                            }
+                        } else {
+                            if (executeMove(move, "b")) {
+                                firstMove = false;
+                                isWhiteMove = true;
+                                int piece = ChessBoard[fromRow][fromCol];
+                                movingPiece = piece;
+                                ChessBoard[fromRow][fromCol] = 0;
+                                ChessBoard[row] [col]= piece;
+                                Log.d(TAG, move);
+                            }
                         }
-                    } else {
-                        if (executeMove(move, "b")) {
-                            firstMove = false;
-                            isWhiteMove = true;
-                            int piece = ChessBoard[fromRow][fromCol];
-                            movingPiece = piece;
-                            ChessBoard[fromRow][fromCol] = 0;
-                            ChessBoard[row] [col]= piece;
-                            Log.d(TAG, move);
+
+                    }
+
+                    invalidate();
+                    movingPiece=-1;
+
+                    chess.Board.checkmate();
+
+                    if(chess.Board.isWhiteCheckmate() || chess.Board.isBlackCheckmate()) {
+                        //System.out.println("Checkmate");
+                        MainActivity.getInstance().printCheckmate();
+
+                        if (chess.Board.isBlackCheckmate()) {
+                            //System.out.println("White wins");
+                            //System.exit(0);
+                            MainActivity.getInstance().printWhiteWins();
                         }
+                        else if (chess.Board.isWhiteCheckmate()) {
+                            //System.out.println("Black wins");
+                            //System.exit(0);
+                            MainActivity.getInstance().printBlackWins();
+                        }
+                        run = false;
+                        return true;
+                    }
+                    if(chess.Board.isWhiteCheck() || chess.Board.isBlackCheck() ) {
+                        //System.out.println("Check");
+                        MainActivity.getInstance().printCheck();
+
                     }
 
-                }
-
-                invalidate();
-                movingPiece=-1;
-
-                chess.Board.checkmate();
-
-                if(chess.Board.isWhiteCheckmate() || chess.Board.isBlackCheckmate()) {
-                    //System.out.println("Checkmate");
-                    MainActivity.getInstance().printCheckmate();
-
-                    if (chess.Board.isBlackCheckmate()) {
-                        //System.out.println("White wins");
-                        //System.exit(0);
-                        MainActivity.getInstance().printWhiteWins();
-                    }
-                    else if (chess.Board.isWhiteCheckmate()) {
-                        //System.out.println("Black wins");
-                        //System.exit(0);
-                        MainActivity.getInstance().printBlackWins();
-                    }
-                }
-                if(chess.Board.isWhiteCheck() || chess.Board.isBlackCheck() ) {
-                    //System.out.println("Check");
-                    MainActivity.getInstance().printCheck();
-
-                }
-
-                break;
+                    break;
+            }
         }
+
         return true;
     }
 
@@ -546,5 +562,7 @@ public class ChessView extends View {
         if(firstMove != true) {
             isWhiteMove = !isWhiteMove;
         }
+
+        run = true;
     }
 }
