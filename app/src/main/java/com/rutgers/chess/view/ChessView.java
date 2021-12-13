@@ -48,8 +48,10 @@ public class ChessView extends View {
     private int[][] ChessBoard = new int[8][8];
     private int[][] prevChessBoard = new int[8][8];
 
-    private int fromCol = -1;
-    private int fromRow = -1;
+    //private int fromCol = -1;
+    //private int fromRow = -1;
+    private int fromCol = 3;
+    private int fromRow = 3;
     private int movingPiece = -1;
 
     private float movingPieceX = -1;
@@ -293,7 +295,7 @@ public class ChessView extends View {
                 //chess.Board.printIllegalMove();
                 if(!aiMove) {
                     Log.d("Illegal","3");
-                    MainActivity.getInstance().printIllegalMove();
+                  //  MainActivity.getInstance().printIllegalMove();
                 }
                 return false;
             }
@@ -403,27 +405,31 @@ public class ChessView extends View {
 
                 prevChessBoard = copyChessBoard(ChessBoard);
 
-                if (isWhiteMove) {
-                    if (executeMove(move, "w")) {
-                        firstMove = false;
-                        isWhiteMove = false;
-                        int piece = ChessBoard[fromRow][fromCol];
-                        ChessBoard[fromRow] [fromCol]= 0;
-                        ChessBoard[row][col] = piece;
-                        Log.d(TAG, move);
-                        movingPiece = piece;
+                if(fromRow>-1 && fromRow<8 && fromCol > -1 && fromCol < 8 && ChessBoard[fromRow][fromCol] !=0) {
+                    if (isWhiteMove) {
+                        if (executeMove(move, "w")) {
+                            firstMove = false;
+                            isWhiteMove = false;
+                            int piece = ChessBoard[fromRow][fromCol];
+                            ChessBoard[fromRow] [fromCol]= 0;
+                            ChessBoard[row][col] = piece;
+                            Log.d(TAG, move);
+                            movingPiece = piece;
+                        }
+                    } else {
+                        if (executeMove(move, "b")) {
+                            firstMove = false;
+                            isWhiteMove = true;
+                            int piece = ChessBoard[fromRow][fromCol];
+                            movingPiece = piece;
+                            ChessBoard[fromRow][fromCol] = 0;
+                            ChessBoard[row] [col]= piece;
+                            Log.d(TAG, move);
+                        }
                     }
-                } else {
-                    if (executeMove(move, "b")) {
-                        firstMove = false;
-                        isWhiteMove = true;
-                        int piece = ChessBoard[fromRow][fromCol];
-                        movingPiece = piece;
-                        ChessBoard[fromRow][fromCol] = 0;
-                        ChessBoard[row] [col]= piece;
-                        Log.d(TAG, move);
-                    }
+
                 }
+
                 invalidate();
                 movingPiece=-1;
                 break;
