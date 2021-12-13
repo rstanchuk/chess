@@ -1,6 +1,7 @@
 package com.rutgers.chess.view;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 
 import com.rutgers.chess.MainActivity;
 import com.rutgers.chess.R;
@@ -56,7 +58,7 @@ public class ChessView extends View {
     //for undo
     private chess.Square[][] square;
 
-    public boolean isWhiteMove = true;
+    public static boolean isWhiteMove = true;
 
     public ChessView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -107,7 +109,7 @@ public class ChessView extends View {
         drawBoard(canvas);
     }
 
-    private String getMove(int fromCol, int fromRow, int toCol, int toRow) {
+    private static String getMove(int fromCol, int fromRow, int toCol, int toRow) {
         char fromColA = '-';
         switch(fromCol) {
             case 0:
@@ -168,6 +170,47 @@ public class ChessView extends View {
     }
 
     public static boolean draw = false;
+    private static boolean aiMove = false;
+
+//    private static int fromColAI = 0;
+//    private static int fromRowAI = 0;
+
+    public void executeAImove() {
+        aiMove = true;
+
+        int fromC = 0;
+        int fromR = 0;
+        int c = 0;
+        int r = 0;
+
+        int squares = 10000;
+        int i = 0;
+        while (i < squares) {
+            fromC = (int) (Math.random() * 8);
+            fromR = (int) (Math.random() * 8);
+            c = (int) (Math.random() * 8);
+            r = (int) (Math.random() * 8);
+
+            String move = getMove(fromC, fromR, c, r);
+            if (ChessBoard[fromC][fromR] != 0 && fromC != c &&
+                    fromR != r && executeMove(move, (isWhiteMove ? "w" : "b"))) {
+                Log.d(TAG, move);
+                isWhiteMove = false;
+                int piece = ChessBoard[fromR][fromC];
+                ChessBoard[fromR] [fromC]= 0;
+                ChessBoard[r][c] = piece;
+                invalidate();
+                aiMove = false;
+                return;
+            }
+
+            i++;
+        }
+
+        aiMove = false;
+
+        MainActivity.getInstance().printNoMove();
+    }
 
     public static boolean executeMove(String move, String playerName) {
 
@@ -179,8 +222,10 @@ public class ChessView extends View {
             } else {
                // chess.Board.printIllegalMove();
                // Log.d("error","Illegal move");
-                Log.d("Illegal","1");
-                MainActivity.getInstance().printIllegalMove();
+                if(!aiMove) {
+                    Log.d("Illegal","1");
+                    MainActivity.getInstance().printIllegalMove();
+                }
                 return false;
             }
 
@@ -236,7 +281,7 @@ public class ChessView extends View {
                 boolean isMoving = chess.Board.move(originCol, originRow, destinationCol, destinationRow, playerName, null);
               //  if(!isMoving) chess.Board.printIllegalMove();
 
-                if(!isMoving)  {
+                if(!isMoving && !aiMove)  {
                     Log.d("Illegal","2");
                     MainActivity.getInstance().printIllegalMove();
                 }
@@ -245,8 +290,10 @@ public class ChessView extends View {
 
             } else {
                 //chess.Board.printIllegalMove();
-                Log.d("Illegal","3");
-                MainActivity.getInstance().printIllegalMove();
+                if(!aiMove) {
+                    Log.d("Illegal","3");
+                    MainActivity.getInstance().printIllegalMove();
+                }
                 return false;
             }
         } else
@@ -268,7 +315,7 @@ public class ChessView extends View {
                 if(playerName=="w" && destinationRow==0) {
                     boolean isMoving = chess.Board.move(originCol, originRow, destinationCol, destinationRow, playerName, move.substring(6));
                     //if(!isMoving) chess.Board.printIllegalMove();
-                    if(!isMoving) {
+                    if(!isMoving && !aiMove) {
                         Log.d("Illegal","4");
                         MainActivity.getInstance().printIllegalMove();
                     }
@@ -277,7 +324,7 @@ public class ChessView extends View {
                 if(playerName=="b" && destinationRow==7) {
                     boolean isMoving = chess.Board.move(originCol, originRow, destinationCol, destinationRow, playerName, move.substring(6));
                     //if(!isMoving) chess.Board.printIllegalMove();
-                    if(!isMoving)  {
+                    if(!isMoving && !aiMove)  {
                         Log.d("Illegal","5");
                         MainActivity.getInstance().printIllegalMove();
                     }
@@ -285,16 +332,20 @@ public class ChessView extends View {
 
                 }
                 else {
-                    Log.d("Illegal","6");
-                    MainActivity.getInstance().printIllegalMove();
+                    if(!aiMove) {
+                        Log.d("Illegal","6");
+                        MainActivity.getInstance().printIllegalMove();
+                    }
                     //chess.Board.printIllegalMove();
                     return false;
                 }
 
 
             } else {
-                Log.d("Illegal","7");
-                MainActivity.getInstance().printIllegalMove();
+                if(!aiMove) {
+                    Log.d("Illegal","7");
+                    MainActivity.getInstance().printIllegalMove();
+                }
                 //chess.Board.printIllegalMove();
                 return false;
             }
@@ -310,8 +361,10 @@ public class ChessView extends View {
         else
         {
             //chess.Board.printIllegalMove();
-            Log.d("Illegal","8");
-            MainActivity.getInstance().printIllegalMove();
+            if(!aiMove) {
+                Log.d("Illegal","8");
+                MainActivity.getInstance().printIllegalMove();
+            }
             return false;
         }
 

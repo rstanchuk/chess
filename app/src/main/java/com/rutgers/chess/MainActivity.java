@@ -44,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
         aiButton = findViewById(R.id.ai_button);
         aiButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Log.d(TAG, "hello2");
+                ChessView cv  = findViewById(R.id.chess_view);
+                cv.executeAImove();
             }
         });
 
@@ -116,6 +117,15 @@ public class MainActivity extends AppCompatActivity {
     public void printDraw() {
         Context context = getApplicationContext();
         CharSequence text = "draw";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
+
+    public void printNoMove() {
+        Context context = getApplicationContext();
+        CharSequence text = "Can't find any move!";
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, text, duration);
