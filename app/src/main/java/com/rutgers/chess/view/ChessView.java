@@ -175,7 +175,6 @@ public class ChessView extends View {
     private static boolean aiMove = false;
 
     public void executeAImove() {
-        prevChessBoard = copyChessBoard(ChessBoard);
         aiMove = true;
 
         int fromC = 0;
@@ -194,6 +193,7 @@ public class ChessView extends View {
             String move = getMove(fromC, fromR, c, r);
             if (ChessBoard[fromC][fromR] != 0 && fromC != c &&
                     fromR != r && executeMove(move, (isWhiteMove ? "w" : "b"))) {
+                prevChessBoard = copyChessBoard(ChessBoard);
                 Log.d(TAG, move);
                 isWhiteMove = !isWhiteMove;
                 int piece = ChessBoard[fromR][fromC];
