@@ -225,7 +225,7 @@ public class ChessView extends View {
             } else {
                // chess.Board.printIllegalMove();
                // Log.d("error","Illegal move");
-                if(!aiMove) {
+                if(!aiMove && !move.trim().equals("resign")) {
                     Log.d("Illegal","1");
                     MainActivity.getInstance().printIllegalMove();
                 }
