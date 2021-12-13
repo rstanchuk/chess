@@ -4,6 +4,8 @@ import static android.app.PendingIntent.getActivity;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,6 +16,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.rutgers.chess.view.ChessView;
+import com.rutgers.chess.view.SaveDialog;
 
 public class MainActivity extends AppCompatActivity {
     private final String TAG = "MainActivity";
@@ -32,6 +35,19 @@ public class MainActivity extends AppCompatActivity {
         //chessView = new ChessView(this);
         //setContentView(chessView);
         instance = this;
+
+        DialogFragment dialogFragment = new SaveDialog();
+
+        // Arguments:
+       // Bundle args = new Bundle();
+       // args.putString(dialogFragment.ARG_TITLE, "Confirmation");
+       // args.putString(dialogFragment.ARG_MESSAGE, "Do you like this example?");
+       // dialogFragment.setArguments(args);
+
+        FragmentManager fragmentManager = this.getSupportFragmentManager();
+
+        // Show:
+        dialogFragment.show(fragmentManager, "Dialog");
 
         undoButton = findViewById(R.id.undo_button);
         undoButton.setOnClickListener(new View.OnClickListener() {

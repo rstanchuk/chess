@@ -576,6 +576,7 @@ public class Board {
             // checking boundary conditions for every possible king move
             // and checking for legality
             // then checking that move for check (checkmate)
+
             if (inBounds(m, n) && board[K[0]][K[1]].charAt(0) != board[m][n].charAt(0)) {
             	String[][] tBoard = board;
             	tBoard[K[0]][K[1]] = "  ";
@@ -588,7 +589,7 @@ public class Board {
             	} else if(result == 1) {
             		Board.setWhiteCheckmate(true);
             	} else if(result == 2) {
-            		Board.setBlackCheckmate(true);
+					Board.setBlackCheckmate(true);
             	}
             }
         }
