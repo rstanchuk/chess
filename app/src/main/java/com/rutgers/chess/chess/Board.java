@@ -1,5 +1,7 @@
 package chess;
 
+import android.util.Log;
+
 /**
  * Board represents a 8x8 set of squares containing pieces
  * 
@@ -9,6 +11,7 @@ package chess;
 public class Board {
 
 	private static Square[][] square = new Square[8][8];
+	private static Square[][] squarePrev = new Square[8][8];
 
 	private static boolean isWhiteCheckmate = false;
 	private static boolean isBlackCheckmate = false;
@@ -37,14 +40,18 @@ public class Board {
 				if (i % 2 == 0) {
 					if (j % 2 == 0) {
 						square[i][j] = new Square("  ");
+						squarePrev[i][j] = new Square("  ");
 					} else {
 						square[i][j] = new Square("##");
+						squarePrev[i][j] = new Square("##");
 					}
 				} else {
 					if (j % 2 == 0) {
 						square[i][j] = new Square("##");
+						squarePrev[i][j] = new Square("##");
 					} else {
 						square[i][j] = new Square("  ");
+						squarePrev[i][j] = new Square("  ");
 					}
 				}
 
@@ -84,6 +91,15 @@ public class Board {
 		square[0][6] = new Square(black, new Knight(), square[0][6].getFloor());
 		square[0][7] = new Square(black, new Rook(), square[0][7].getFloor());
 
+		for(int i = 0; i < 8; i++) {
+			for(int j = 0; j < 8; j++) {
+				if(!square[i][j].isEmpty()) {
+					squarePrev[i][j] = new Square(square[i][j].getPiece().getPlayer(),
+							square[i][j].getPiece(),
+							square[i][j].getFloor());
+				}
+			}
+		}
 	}
 
 	/**
@@ -145,6 +161,20 @@ public class Board {
 
 	}
 
+	public static void undo() {
+		for(int i = 0; i < 8; i++) {
+			for(int j = 0; j < 8; j++) {
+				if(!squarePrev[i][j].isEmpty()) {
+					square[i][j] = new Square(squarePrev[i][j].getPiece().getPlayer(),
+							squarePrev[i][j].getPiece(),
+							squarePrev[i][j].getFloor());
+				} else {
+					square[i][j] = new Square("  ");
+				}
+			}
+		}
+	}
+
 	/**
 	 * move the piece after checking if it is possible, after moving we need to verify special situation
 	 * for example, if there is a check, if there is a checkmate, a promotion
@@ -158,6 +188,18 @@ public class Board {
 	 */
 	public static boolean move(int originCol, int originRow, int destinationCol, int destinationRow, String playerName,
 			String promotion) {
+
+		for(int i = 0; i < 8; i++) {
+			for(int j = 0; j < 8; j++) {
+				if(!square[i][j].isEmpty()) {
+					squarePrev[i][j] = new Square(square[i][j].getPiece().getPlayer(),
+							square[i][j].getPiece(),
+							square[i][j].getFloor());
+				} else {
+					squarePrev[i][j] = new Square("  ");
+				}
+			}
+		}
 
 		// already checked if it is under the board range
 

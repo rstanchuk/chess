@@ -430,6 +430,7 @@ public class ChessView extends View {
     public void undo() {
         ChessBoard = copyChessBoard(prevChessBoard);
         invalidate();
+        chess.Board.undo();
         isWhiteMove = !isWhiteMove;
     }
 }
