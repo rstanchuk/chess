@@ -100,6 +100,8 @@ public class ChessView extends View {
         ChessBoard[6][6] = R.drawable.chess_plt60;
         ChessBoard[6][7] = R.drawable.chess_plt60;
 
+        prevChessBoard = copyChessBoard(ChessBoard);
+
         chess.Board.createBoard();
     }
 
@@ -173,6 +175,7 @@ public class ChessView extends View {
     private static boolean aiMove = false;
 
     public void executeAImove() {
+        prevChessBoard = copyChessBoard(ChessBoard);
         aiMove = true;
 
         int fromC = 0;
@@ -192,12 +195,13 @@ public class ChessView extends View {
             if (ChessBoard[fromC][fromR] != 0 && fromC != c &&
                     fromR != r && executeMove(move, (isWhiteMove ? "w" : "b"))) {
                 Log.d(TAG, move);
-                isWhiteMove = false;
+                isWhiteMove = !isWhiteMove;
                 int piece = ChessBoard[fromR][fromC];
                 ChessBoard[fromR] [fromC]= 0;
                 ChessBoard[r][c] = piece;
                 invalidate();
                 aiMove = false;
+                firstMove = false;
                 return;
             }
 
@@ -401,6 +405,7 @@ public class ChessView extends View {
 
                 if (isWhiteMove) {
                     if (executeMove(move, "w")) {
+                        firstMove = false;
                         isWhiteMove = false;
                         int piece = ChessBoard[fromRow][fromCol];
                         ChessBoard[fromRow] [fromCol]= 0;
@@ -410,6 +415,7 @@ public class ChessView extends View {
                     }
                 } else {
                     if (executeMove(move, "b")) {
+                        firstMove = false;
                         isWhiteMove = true;
                         int piece = ChessBoard[fromRow][fromCol];
                         movingPiece = piece;
@@ -477,10 +483,14 @@ public class ChessView extends View {
         return myInt;
     }
 
+    private boolean firstMove = true;
+
     public void undo() {
         ChessBoard = copyChessBoard(prevChessBoard);
         invalidate();
         chess.Board.undo();
-        isWhiteMove = !isWhiteMove;
+        if(firstMove != true) {
+            isWhiteMove = !isWhiteMove;
+        }
     }
 }
