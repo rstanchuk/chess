@@ -13,10 +13,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.rutgers.chess.view.ChessView;
-import com.rutgers.chess.view.SaveDialog;
 
 public class MainActivity extends AppCompatActivity {
     private final String TAG = "MainActivity";
@@ -35,19 +36,6 @@ public class MainActivity extends AppCompatActivity {
         //chessView = new ChessView(this);
         //setContentView(chessView);
         instance = this;
-
-        DialogFragment dialogFragment = new SaveDialog();
-
-        // Arguments:
-       // Bundle args = new Bundle();
-       // args.putString(dialogFragment.ARG_TITLE, "Confirmation");
-       // args.putString(dialogFragment.ARG_MESSAGE, "Do you like this example?");
-       // dialogFragment.setArguments(args);
-
-        FragmentManager fragmentManager = this.getSupportFragmentManager();
-
-        // Show:
-        dialogFragment.show(fragmentManager, "Dialog");
 
         undoButton = findViewById(R.id.undo_button);
         undoButton.setOnClickListener(new View.OnClickListener() {
@@ -164,5 +152,36 @@ public class MainActivity extends AppCompatActivity {
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+    }
+
+    public void saveGame() {
+        AlertDialog.Builder alertName = new AlertDialog.Builder(this);
+        final EditText saveName = new EditText(this);
+
+        alertName.setTitle("Save");
+        alertName.setView(saveName);
+
+        LinearLayout layoutName = new LinearLayout(this);
+        layoutName.setOrientation(LinearLayout.VERTICAL);
+        layoutName.addView(saveName); // displays the user input bar
+        alertName.setView(layoutName);
+
+        alertName.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String name = saveName.getText().toString().trim();
+                if(name.length() > 0) {
+                    Log.d(TAG, name);
+                }
+            }
+        });
+
+        alertName.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dialog.cancel(); // closes dialog
+                alertName.show(); // display the dialog
+            }
+        });
+
+        alertName.show();
     }
 }
