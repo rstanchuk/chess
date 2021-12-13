@@ -188,8 +188,6 @@ public class ChessView extends View {
         int i = 0;
 
         if(run) {
-
-
             while (i < squares) {
                 fromC = (int) (Math.random() * 8);
                 fromR = (int) (Math.random() * 8);
@@ -254,6 +252,7 @@ public class ChessView extends View {
             if (move.equals("draw")) {
                 //System.exit(0);
                 MainActivity.getInstance().printDraw();
+                run = false;
                 return true;
             } else {
                // chess.Board.printIllegalMove();
@@ -276,6 +275,7 @@ public class ChessView extends View {
                 MainActivity.getInstance().printWhiteWins();
             }
             //System.exit(0);
+            run = false;
             return true;
         }
 
@@ -407,7 +407,7 @@ public class ChessView extends View {
 
     }
 
-    private boolean run = true;
+    private static boolean run = true;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
