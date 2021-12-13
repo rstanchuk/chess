@@ -204,6 +204,30 @@ public class ChessView extends View {
                 invalidate();
                 aiMove = false;
                 firstMove = false;
+
+                chess.Board.checkmate();
+
+                if(chess.Board.isWhiteCheckmate() || chess.Board.isBlackCheckmate()) {
+                    //System.out.println("Checkmate");
+                    MainActivity.getInstance().printCheckmate();
+
+                    if (chess.Board.isBlackCheckmate()) {
+                        //System.out.println("White wins");
+                        //System.exit(0);
+                        MainActivity.getInstance().printWhiteWins();
+                    }
+                    else if (chess.Board.isWhiteCheckmate()) {
+                        //System.out.println("Black wins");
+                        //System.exit(0);
+                        MainActivity.getInstance().printBlackWins();
+                    }
+                }
+                if(chess.Board.isWhiteCheck() || chess.Board.isBlackCheck() ) {
+                    //System.out.println("Check");
+                    MainActivity.getInstance().printCheck();
+
+                }
+
                 return;
             }
 
@@ -432,6 +456,30 @@ public class ChessView extends View {
 
                 invalidate();
                 movingPiece=-1;
+
+                chess.Board.checkmate();
+
+                if(chess.Board.isWhiteCheckmate() || chess.Board.isBlackCheckmate()) {
+                    //System.out.println("Checkmate");
+                    MainActivity.getInstance().printCheckmate();
+
+                    if (chess.Board.isBlackCheckmate()) {
+                        //System.out.println("White wins");
+                        //System.exit(0);
+                        MainActivity.getInstance().printWhiteWins();
+                    }
+                    else if (chess.Board.isWhiteCheckmate()) {
+                        //System.out.println("Black wins");
+                        //System.exit(0);
+                        MainActivity.getInstance().printBlackWins();
+                    }
+                }
+                if(chess.Board.isWhiteCheck() || chess.Board.isBlackCheck() ) {
+                    //System.out.println("Check");
+                    MainActivity.getInstance().printCheck();
+
+                }
+
                 break;
         }
         return true;

@@ -131,4 +131,22 @@ public class MainActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
     }
+
+    public void printCheck() {
+        Context context = getApplicationContext();
+        CharSequence text = "Check";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
+
+    public void printCheckmate() {
+        Context context = getApplicationContext();
+        CharSequence text = "Checkmate";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
 }
