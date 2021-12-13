@@ -102,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        openSaveFileWindow();
     }
     public static MainActivity getInstance() {
         return instance;
@@ -168,37 +167,6 @@ public class MainActivity extends AppCompatActivity {
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
-    }
-
-    public void saveGame() {
-        AlertDialog.Builder alertName = new AlertDialog.Builder(this);
-        final EditText saveName = new EditText(this);
-
-        alertName.setTitle("Save");
-        alertName.setView(saveName);
-
-        LinearLayout layoutName = new LinearLayout(this);
-        layoutName.setOrientation(LinearLayout.VERTICAL);
-        layoutName.addView(saveName); // displays the user input bar
-        alertName.setView(layoutName);
-
-        alertName.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                String name = saveName.getText().toString().trim();
-                if(name.length() > 0) {
-                    Log.d(TAG, name);
-                }
-            }
-        });
-
-        alertName.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                dialog.cancel(); // closes dialog
-                alertName.show(); // display the dialog
-            }
-        });
-
-        alertName.show();
     }
 
     public void openSaveFileWindow() {

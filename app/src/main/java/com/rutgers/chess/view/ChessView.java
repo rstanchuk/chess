@@ -231,7 +231,7 @@ public class ChessView extends View {
                             //System.exit(0);
                             MainActivity.getInstance().printBlackWins();
                         }
-
+                        MainActivity.getInstance().openSaveFileWindow();
                         run = false;
                         aiMove = false;
                         return;
@@ -261,6 +261,7 @@ public class ChessView extends View {
             if (move.equals("draw")) {
                 //System.exit(0);
                 MainActivity.getInstance().printDraw();
+                MainActivity.getInstance().openSaveFileWindow();
                 run = false;
                 return true;
             } else {
@@ -284,6 +285,7 @@ public class ChessView extends View {
                 MainActivity.getInstance().printWhiteWins();
             }
             //System.exit(0);
+            MainActivity.getInstance().openSaveFileWindow();
             run = false;
             return true;
         }
@@ -498,6 +500,7 @@ public class ChessView extends View {
                             //System.exit(0);
                             MainActivity.getInstance().printBlackWins();
                         }
+                        MainActivity.getInstance().openSaveFileWindow();
                         run = false;
                         return true;
                     }
