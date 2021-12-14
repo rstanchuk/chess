@@ -29,7 +29,10 @@ public class ListSavesActivity extends AppCompatActivity {
         File[] files = new File(getApplicationContext().getFilesDir().toString()).listFiles();
         mobileArray = new String[files.length];
         for(int i = 0; i < files.length; i++) {
-            mobileArray[i] = files[i].getName();
+            String str = files[i].getName();
+            String nameSplit = str.split("\\.")[0];
+            Log.d(TAG, nameSplit);
+            mobileArray[i] = nameSplit;
         }
 
         ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.activity_listview,mobileArray);
@@ -44,7 +47,7 @@ public class ListSavesActivity extends AppCompatActivity {
 
                 String fileName = (String)adapter.getItem(pos);
                 Intent intent = new Intent(MainActivity.getInstance(), ReplayGameActivity.class);
-                intent.putExtra("fileName", fileName);
+                intent.putExtra("fileName", fileName+".save");
                 startActivity(intent);
             }
         });

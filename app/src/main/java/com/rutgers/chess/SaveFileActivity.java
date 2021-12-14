@@ -50,6 +50,11 @@ public class SaveFileActivity extends AppCompatActivity {
                     ArrayList<ChessMove> save = cv.getSave();
 
                     File file = new File(getApplicationContext().getFilesDir(), name);
+                    if(file.exists()) {
+                        MainActivity.getInstance().printFileAlreadyExists();
+                        return;
+                    }
+
                     try {
                         file.createNewFile();
                     } catch (IOException ioe) {
