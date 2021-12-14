@@ -25,7 +25,6 @@ public class Board {
 	private static boolean isWKingDead = false;
 	private static boolean isBKingDead = false;
 
-	
 	private static int[] wK = new int[2];
 	private static int[] bK = new int[2];
 
@@ -237,9 +236,11 @@ public class Board {
 
 								if (promotion == null)
 									promotion = "Q";
-								if (promotion.equals("Q"))
+								if (promotion.equals("Q")) {
 									square[destinationRow][destinationCol] = new Square(white, new Queen(),
 											square[destinationRow][destinationCol].getFloor());
+									System.out.println("promotion Queen");
+								}
 								if (promotion.equals("R"))
 									square[destinationRow][destinationCol] = new Square(white, new Rook(),
 											square[destinationRow][destinationCol].getFloor());
@@ -260,9 +261,11 @@ public class Board {
 									&& destinationRow == 7) {
 								if (promotion == null)
 									promotion = "Q";
-								if (promotion.equals("Q"))
+								if (promotion.equals("Q")) {
 									square[destinationRow][destinationCol] = new Square(black, new Queen(),
 											square[destinationRow][destinationCol].getFloor());
+									System.out.println("promotion Queen");
+								}
 								if (promotion.equals("R"))
 									square[destinationRow][destinationCol] = new Square(black, new Rook(),
 											square[destinationRow][destinationCol].getFloor());
@@ -346,9 +349,11 @@ public class Board {
 
 									if (promotion == null)
 										promotion = "Q";
-									if (promotion.equals("Q"))
+									if (promotion.equals("Q")) {
 										square[destinationRow][destinationCol] = new Square(white, new Queen(),
 												square[destinationRow][destinationCol].getFloor());
+										System.out.println("promotion Queen");
+									}
 									if (promotion.equals("R"))
 										square[destinationRow][destinationCol] = new Square(white, new Rook(),
 												square[destinationRow][destinationCol].getFloor());
@@ -366,9 +371,11 @@ public class Board {
 										&& destinationRow == 7) {
 									if (promotion == null)
 										promotion = "Q";
-									if (promotion.equals("Q"))
+									if (promotion.equals("Q")) {
 										square[destinationRow][destinationCol] = new Square(black, new Queen(),
 												square[destinationRow][destinationCol].getFloor());
+										System.out.println("promotion Queen");
+									}
 									if (promotion.equals("R"))
 										square[destinationRow][destinationCol] = new Square(black, new Rook(),
 												square[destinationRow][destinationCol].getFloor());

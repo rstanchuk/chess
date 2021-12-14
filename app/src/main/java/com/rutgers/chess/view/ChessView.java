@@ -459,6 +459,12 @@ public class ChessView extends View {
                                 isWhiteMove = false;
                                 int piece = ChessBoard[fromRow][fromCol];
                                 ChessBoard[fromRow] [fromCol]= 0;
+                                //check promotion of white pawn
+                                if(row==0 && piece==R.drawable.chess_plt60)
+                                {
+                                    piece =  R.drawable.chess_qlt60;
+
+                                }
                                 ChessBoard[row][col] = piece;
                                 Log.d(TAG, move);
                                 movingPiece = piece;
@@ -472,6 +478,13 @@ public class ChessView extends View {
                                 int piece = ChessBoard[fromRow][fromCol];
                                 movingPiece = piece;
                                 ChessBoard[fromRow][fromCol] = 0;
+                                //check promotion of white pawn
+                                if(row==7 && piece==R.drawable.chess_pdt60)
+                                {
+                                    piece =  R.drawable.chess_qdt60;
+
+                                }
+
                                 ChessBoard[row] [col]= piece;
                                 Log.d(TAG, move);
 
