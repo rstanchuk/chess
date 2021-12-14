@@ -36,13 +36,11 @@ public class ListSavesActivity extends AppCompatActivity {
         fileList.setAdapter(adapter);
 
         exit = findViewById(R.id.exit_button);
-
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             //   ChessView cv = findViewById(R.id.chess_view);
-             //   Intent intent = new Intent(MainActivity.getInstance(), ChessView.class);
-             //   startActivity(intent);
+                Intent intent = new Intent(MainActivity.getInstance(), ChessView.class);
+                startActivity(intent);
             }
         });
     }
