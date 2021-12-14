@@ -55,12 +55,8 @@ public class SaveFileActivity extends AppCompatActivity {
                     } catch (IOException ioe) {
                         MainActivity.getInstance().printCorruptSave();
                     }
-
-                    Log.d(TAG, file.canWrite()+"");
-                    Log.d(TAG, file.getAbsolutePath());
-
+                    
                     try {
-//                        FileOutputStream fos = getApplicationContext().openFileOutput(file.getAbsolutePath(), Context.MODE_PRIVATE);
                         FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
                         ObjectOutputStream oos = new ObjectOutputStream(fos);
                         oos.writeObject(save);
@@ -70,24 +66,23 @@ public class SaveFileActivity extends AppCompatActivity {
                         MainActivity.getInstance().printCorruptSave();
                     }
 
-                    //This is just to test reading
-                    ArrayList<ChessMove> moves = new ArrayList<ChessMove>();
-                    try {
-//                        FileInputStream fis = getApplicationContext().openFileInput(getApplicationContext().getFilesDir() + "/" + name);
-                        FileInputStream fis = new FileInputStream(getApplicationContext().getFilesDir() + "/" + name);
-                        ObjectInputStream ois = new ObjectInputStream(fis);
-
-                        moves = (ArrayList) ois.readObject();
-
-                        ois.close();
-                        fis.close();
-                    }  catch (IOException ioe) {
-                        MainActivity.getInstance().printCorruptSave();
-                    }
-                    catch (ClassNotFoundException c)  {
-                        MainActivity.getInstance().printCorruptSave();
-                    }
-                    //This is just to test reading
+//                    //This is just to test reading
+//                    ArrayList<ChessMove> moves = new ArrayList<ChessMove>();
+//                    try {
+//                        FileInputStream fis = new FileInputStream(getApplicationContext().getFilesDir() + "/" + name);
+//                        ObjectInputStream ois = new ObjectInputStream(fis);
+//
+//                        moves = (ArrayList) ois.readObject();
+//
+//                        ois.close();
+//                        fis.close();
+//                    }  catch (IOException ioe) {
+//                        MainActivity.getInstance().printCorruptSave();
+//                    }
+//                    catch (ClassNotFoundException c)  {
+//                        MainActivity.getInstance().printCorruptSave();
+//                    }
+//                    //This is just to test reading
 
                     cv.reset();
                     Intent intent = new Intent(MainActivity.getInstance(), ChessView.class);
