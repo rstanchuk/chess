@@ -113,6 +113,48 @@ public class ChessView extends View {
         chess.Board.createBoard();
     }
 
+    public void reset() {
+        ChessBoard[0][0] = R.drawable.chess_rdt60;
+        ChessBoard[0][1] = R.drawable.chess_ndt60;
+        ChessBoard[0][2] = R.drawable.chess_bdt60;
+        ChessBoard[0][3] = R.drawable.chess_qdt60;
+        ChessBoard[0][4] = R.drawable.chess_kdt60;
+        ChessBoard[0][5] = R.drawable.chess_bdt60;
+        ChessBoard[0][6] = R.drawable.chess_ndt60;
+        ChessBoard[0][7] = R.drawable.chess_rdt60;
+
+        ChessBoard[1][0] = R.drawable.chess_pdt60;
+        ChessBoard[1][1] = R.drawable.chess_pdt60;
+        ChessBoard[1][2] = R.drawable.chess_pdt60;
+        ChessBoard[1][3] = R.drawable.chess_pdt60;
+        ChessBoard[1][4] = R.drawable.chess_pdt60;
+        ChessBoard[1][5] = R.drawable.chess_pdt60;
+        ChessBoard[1][6] = R.drawable.chess_pdt60;
+        ChessBoard[1][7] = R.drawable.chess_pdt60;
+
+        ChessBoard[7][0] = R.drawable.chess_rlt60;
+        ChessBoard[7][1] = R.drawable.chess_nlt60;
+        ChessBoard[7][2] = R.drawable.chess_blt60;
+        ChessBoard[7][3] = R.drawable.chess_qlt60;
+        ChessBoard[7][4] = R.drawable.chess_klt60;
+        ChessBoard[7][5] = R.drawable.chess_blt60;
+        ChessBoard[7][6] = R.drawable.chess_nlt60;
+        ChessBoard[7][7] = R.drawable.chess_rlt60;
+
+        ChessBoard[6][0] = R.drawable.chess_plt60;
+        ChessBoard[6][1] = R.drawable.chess_plt60;
+        ChessBoard[6][2] = R.drawable.chess_plt60;
+        ChessBoard[6][3] = R.drawable.chess_plt60;
+        ChessBoard[6][4] = R.drawable.chess_plt60;
+        ChessBoard[6][5] = R.drawable.chess_plt60;
+        ChessBoard[6][6] = R.drawable.chess_plt60;
+        ChessBoard[6][7] = R.drawable.chess_plt60;
+
+        prevChessBoard = copyChessBoard(ChessBoard);
+
+        chess.Board.createBoard();
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -417,7 +459,7 @@ public class ChessView extends View {
 
     }
 
-    private static boolean run = true;
+    public static boolean run = true;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
