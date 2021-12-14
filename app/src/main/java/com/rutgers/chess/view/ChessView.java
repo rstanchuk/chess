@@ -466,6 +466,23 @@ public class ChessView extends View {
 
                                 }
                                 ChessBoard[row][col] = piece;
+                                //check if white king is castling
+                                int steps = Math.abs(fromCol - col);
+                                Log.d("castling", ""+steps);
+
+                                if(steps==2 && ChessBoard[row][col] == R.drawable.chess_klt60) {
+                                    Log.d("castling", "white king");
+                                    if(fromCol < col) {
+                                        ChessBoard[row] [col+1]= 0;
+                                        ChessBoard[row] [col-1]= R.drawable.chess_rlt60;
+                                    }
+                                    else {
+                                        ChessBoard[row] [col-2]= 0;
+                                        ChessBoard[row] [col+1]= R.drawable.chess_rlt60;
+                                    }
+
+                                }
+
                                 Log.d(TAG, move);
                                 movingPiece = piece;
 
@@ -486,6 +503,23 @@ public class ChessView extends View {
                                 }
 
                                 ChessBoard[row] [col]= piece;
+                                //check if black king is castling
+                                int steps = Math.abs(fromCol - col);
+                                Log.d("castling", ""+steps);
+
+                                if(steps==2 && ChessBoard[row][col] == R.drawable.chess_kdt60) {
+                                    Log.d("castling", "black king");
+                                    if(fromCol < col) {
+                                        ChessBoard[row] [col+1]= 0;
+                                        ChessBoard[row] [col-1]= R.drawable.chess_rdt60;
+                                    }
+                                    else {
+                                        ChessBoard[row] [col-2]= 0;
+                                        ChessBoard[row] [col+1]= R.drawable.chess_rdt60;
+                                    }
+
+                                }
+
                                 Log.d(TAG, move);
 
                                 save.add(new ChessMove(fromCol, fromRow, col, row, "b"));

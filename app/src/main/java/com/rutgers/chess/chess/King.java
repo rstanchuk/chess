@@ -215,7 +215,7 @@ public class King extends Piece {
 		}
 
 		if (isMoving)
-			setFirstMove(true);
+			setFirstMove(false);
 		return isMoving;
 	}
 
