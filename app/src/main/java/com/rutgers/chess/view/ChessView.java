@@ -50,7 +50,8 @@ public class ChessView extends View {
     Resources res = getContext().getResources();
     HashMap<Integer, Bitmap> bitmaps = new HashMap<Integer, Bitmap>();
 
-    private int[][] ChessBoard = new int[8][8];
+    public int[][] ChessBoard = new int[8][8];
+
     private int[][] prevChessBoard = new int[8][8];
 
     //private int fromCol = -1;
@@ -179,7 +180,7 @@ public class ChessView extends View {
         drawBoard(canvas);
     }
 
-    private static String getMove(int fromCol, int fromRow, int toCol, int toRow) {
+    public static String getMove(int fromCol, int fromRow, int toCol, int toRow) {
         char fromColA = '-';
         switch(fromCol) {
             case 0:

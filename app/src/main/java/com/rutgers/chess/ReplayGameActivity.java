@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.rutgers.chess.Util.ChessMove;
+import com.rutgers.chess.view.ChessView;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -51,6 +52,8 @@ public class ReplayGameActivity extends AppCompatActivity {
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ChessView cv = ChessView.getInstance();
+                cv.reset();
                 Intent intent = new Intent(MainActivity.getInstance(), MainActivity.class);
                 startActivity(intent);
             }
@@ -60,7 +63,7 @@ public class ReplayGameActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                executeChessMove();
             }
         });
     }
@@ -69,7 +72,25 @@ public class ReplayGameActivity extends AppCompatActivity {
         return instance;
     }
 
-    private void executeMove() {
+    private int moveIndex = 0;
+    private void executeChessMove() {
+        if(moveIndex >= moves.size()) {
+            return;
+        }
+        ChessMove move = moves.get(moveIndex);
+        ChessView cv = ChessView.getInstance();
+        if(move.resign){
+            Log.d(TAG, move.player + " resign");
+        } else if(move.draw) {
+            Log.d(TAG, move.player + " draw");
+        } else {
+            Log.d(TAG, move.player + " " + cv.getMove(move.fromCol, move.fromRow, move.toCol, move.toRow));
+            int piece = cv.ChessBoard[move.fromRow][move.fromCol];
+            cv.ChessBoard[move.fromRow][move.fromCol] = 0;
+            cv.ChessBoard[move.toRow][move.toCol] = piece;
+            cv.invalidate();
+        }
 
+        moveIndex++;
     }
 }
