@@ -460,9 +460,9 @@ public class ChessView extends View {
                                 int piece = ChessBoard[fromRow][fromCol];
                                 ChessBoard[fromRow] [fromCol]= 0;
                                 //check promotion of white pawn
-                                if(row==0 && piece==R.drawable.chess_plt60)
+                                if(row==0 && piece==R.drawable.chess_plt60) //white pawn
                                 {
-                                    piece =  R.drawable.chess_qlt60;
+                                    piece =  R.drawable.chess_qlt60; //white queen
 
                                 }
                                 ChessBoard[row][col] = piece;
@@ -470,15 +470,15 @@ public class ChessView extends View {
                                 int steps = Math.abs(fromCol - col);
                                 Log.d("castling", ""+steps);
 
-                                if(steps==2 && ChessBoard[row][col] == R.drawable.chess_klt60) {
+                                if(steps==2 && ChessBoard[row][col] == R.drawable.chess_klt60) { //white king
                                     Log.d("castling", "white king");
                                     if(fromCol < col) {
                                         ChessBoard[row] [col+1]= 0;
-                                        ChessBoard[row] [col-1]= R.drawable.chess_rlt60;
+                                        ChessBoard[row] [col-1]= R.drawable.chess_rlt60; //white rook
                                     }
                                     else {
                                         ChessBoard[row] [col-2]= 0;
-                                        ChessBoard[row] [col+1]= R.drawable.chess_rlt60;
+                                        ChessBoard[row] [col+1]= R.drawable.chess_rlt60; //white rook
                                     }
 
                                 }
@@ -495,10 +495,10 @@ public class ChessView extends View {
                                 int piece = ChessBoard[fromRow][fromCol];
                                 movingPiece = piece;
                                 ChessBoard[fromRow][fromCol] = 0;
-                                //check promotion of white pawn
-                                if(row==7 && piece==R.drawable.chess_pdt60)
+                                //check promotion of black pawn
+                                if(row==7 && piece==R.drawable.chess_pdt60) //black pawn
                                 {
-                                    piece =  R.drawable.chess_qdt60;
+                                    piece =  R.drawable.chess_qdt60; //black queen
 
                                 }
 
@@ -507,15 +507,15 @@ public class ChessView extends View {
                                 int steps = Math.abs(fromCol - col);
                                 Log.d("castling", ""+steps);
 
-                                if(steps==2 && ChessBoard[row][col] == R.drawable.chess_kdt60) {
+                                if(steps==2 && ChessBoard[row][col] == R.drawable.chess_kdt60) { //black king
                                     Log.d("castling", "black king");
                                     if(fromCol < col) {
                                         ChessBoard[row] [col+1]= 0;
-                                        ChessBoard[row] [col-1]= R.drawable.chess_rdt60;
+                                        ChessBoard[row] [col-1]= R.drawable.chess_rdt60; //black rook
                                     }
                                     else {
                                         ChessBoard[row] [col-2]= 0;
-                                        ChessBoard[row] [col+1]= R.drawable.chess_rdt60;
+                                        ChessBoard[row] [col+1]= R.drawable.chess_rdt60;//black rook
                                     }
 
                                 }
