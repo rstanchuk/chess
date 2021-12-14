@@ -122,11 +122,6 @@ public class MainActivity extends AppCompatActivity {
         playBackButton = findViewById(R.id.playback_button);
         playBackButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                File[] files = new File(getApplicationContext().getFilesDir().toString()).listFiles();
-                for(int i = 0; i < files.length; i++) {
-                    Log.d(TAG, files[i].getName());
-                }
-
                 openListSavesWindow();
             }
         });

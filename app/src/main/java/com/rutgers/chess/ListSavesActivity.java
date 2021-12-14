@@ -12,17 +12,24 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.rutgers.chess.view.ChessView;
 
+import java.io.File;
+
 public class ListSavesActivity extends AppCompatActivity {
     private final String TAG = "ListSavesActivity";
     Button exit;
     ListView fileList ;
 
-    String[] mobileArray = {"Android","IPhone","WindowsMobile","Blackberry",
-            "WebOS","Ubuntu","Windows7","Max OS X"};
+    String[] mobileArray;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_saves);
+
+        File[] files = new File(getApplicationContext().getFilesDir().toString()).listFiles();
+        mobileArray = new String[files.length];
+        for(int i = 0; i < files.length; i++) {
+            mobileArray[i] = files[i].getName();
+        }
 
         ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.activity_listview,mobileArray);
         ListView fileList = findViewById(R.id.file_list);
