@@ -3,6 +3,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,6 +35,14 @@ public class ListSavesActivity extends AppCompatActivity {
         ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.activity_listview,mobileArray);
         ListView fileList = findViewById(R.id.file_list);
         fileList.setAdapter(adapter);
+
+
+        fileList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> list, View v, int pos, long id) {
+                String fileName = (String)adapter.getItem(pos);
+
+            }
+        });
 
         exit = findViewById(R.id.exit_button);
         exit.setOnClickListener(new View.OnClickListener() {
