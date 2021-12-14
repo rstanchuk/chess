@@ -41,6 +41,7 @@ public class ListSavesActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> list, View v, int pos, long id) {
                 String fileName = (String)adapter.getItem(pos);
                 Intent intent = new Intent(MainActivity.getInstance(), ReplayGameActivity.class);
+                intent.putExtra("fileName", fileName);
                 startActivity(intent);
             }
         });
