@@ -212,9 +212,6 @@ public class ChessView extends View {
                     ChessBoard[r][c] = piece;
                     invalidate();
                     aiMove = false;
-                    firstMove = false;
-
-
 
                     chess.Board.checkmate();
 
@@ -455,7 +452,6 @@ public class ChessView extends View {
                     if(fromRow>-1 && fromRow<8 && fromCol > -1 && fromCol < 8 && ChessBoard[fromRow][fromCol] !=0) {
                         if (isWhiteMove) {
                             if (executeMove(move, "w")) {
-                                firstMove = false;
                                 isWhiteMove = false;
                                 int piece = ChessBoard[fromRow][fromCol];
                                 ChessBoard[fromRow] [fromCol]= 0;
@@ -490,7 +486,6 @@ public class ChessView extends View {
                             }
                         } else {
                             if (executeMove(move, "b")) {
-                                firstMove = false;
                                 isWhiteMove = true;
                                 int piece = ChessBoard[fromRow][fromCol];
                                 movingPiece = piece;
@@ -616,14 +611,12 @@ public class ChessView extends View {
         return myInt;
     }
 
-    private boolean firstMove = true;
-
     public void undo() {
         ChessBoard = copyChessBoard(prevChessBoard);
         invalidate();
         chess.Board.undo();
-        if(firstMove != true) {
-            isWhiteMove = !isWhiteMove;
+        isWhiteMove = !isWhiteMove;
+        if(save.size()-1 >= 0) {
             save.remove(save.size()-1);
         }
 
