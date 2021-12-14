@@ -33,7 +33,6 @@ public class ReplayGameActivity extends AppCompatActivity {
         instance = this;
 
         fileName = getIntent().getExtras().getString("fileName");
-        Log.d(TAG, fileName);
 
         try {
             FileInputStream fis = new FileInputStream(getApplicationContext().getFilesDir() + "/" + fileName);
@@ -95,7 +94,6 @@ public class ReplayGameActivity extends AppCompatActivity {
         ChessMove move = moves.get(moveIndex);
         ChessView cv = ChessView.getInstance();
         if(move.resign){
-            Log.d(TAG, move.player + " resign");
             MainActivity.getInstance().printResign();
             if (move.player.equals("w")) {
                 MainActivity.getInstance().printBlackWins();
@@ -103,11 +101,9 @@ public class ReplayGameActivity extends AppCompatActivity {
                 MainActivity.getInstance().printWhiteWins();
             }
         } else if(move.draw) {
-            Log.d(TAG, move.player + " draw");
             cv.draw = true;
             MainActivity.getInstance().printDraw();
         } else {
-            Log.d(TAG, move.player + " " + cv.getMove(move.fromCol, move.fromRow, move.toCol, move.toRow));
             int piece = cv.ChessBoard[move.fromRow][move.fromCol];
             cv.ChessBoard[move.fromRow][move.fromCol] = 0;
             cv.ChessBoard[move.toRow][move.toCol] = piece;

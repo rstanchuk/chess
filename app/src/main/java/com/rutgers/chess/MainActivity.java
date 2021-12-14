@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void printWhiteWins() {
         Context context = getApplicationContext();
-        CharSequence text = "White wins";
+        CharSequence text = "White wins!";
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, text, duration);
@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void printBlackWins() {
         Context context = getApplicationContext();
-        CharSequence text = "Black wins";
+        CharSequence text = "Black wins!";
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, text, duration);
@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void printDraw() {
         Context context = getApplicationContext();
-        CharSequence text = "draw";
+        CharSequence text = "Draw!";
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, text, duration);
@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void printCheck() {
         Context context = getApplicationContext();
-        CharSequence text = "Check";
+        CharSequence text = "Check!";
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, text, duration);
@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void printCheckmate() {
         Context context = getApplicationContext();
-        CharSequence text = "Checkmate";
+        CharSequence text = "Checkmate!";
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, text, duration);
