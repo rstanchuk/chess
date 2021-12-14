@@ -39,6 +39,9 @@ public class ListSavesActivity extends AppCompatActivity {
 
         fileList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> list, View v, int pos, long id) {
+                ChessView cv = ChessView.getInstance();
+                cv.reset();
+
                 String fileName = (String)adapter.getItem(pos);
                 Intent intent = new Intent(MainActivity.getInstance(), ReplayGameActivity.class);
                 intent.putExtra("fileName", fileName);

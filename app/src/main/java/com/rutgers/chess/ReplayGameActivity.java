@@ -11,6 +11,7 @@ import android.widget.Button;
 import com.rutgers.chess.Util.ChessMove;
 import com.rutgers.chess.view.ChessView;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -22,6 +23,7 @@ public class ReplayGameActivity extends AppCompatActivity {
     private static ReplayGameActivity instance;
     Button exit;
     Button next;
+    Button delete;
     ArrayList<ChessMove> moves;
 
     @Override
@@ -66,6 +68,18 @@ public class ReplayGameActivity extends AppCompatActivity {
                 executeChessMove();
             }
         });
+
+        delete = findViewById(R.id.delete_button);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                File dir = getFilesDir();
+                File file = new File(dir, fileName);
+                boolean deleted = file.delete();
+                Intent intent = new Intent(MainActivity.getInstance(), ListSavesActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public static ReplayGameActivity getInstance() {
@@ -81,14 +95,38 @@ public class ReplayGameActivity extends AppCompatActivity {
         ChessView cv = ChessView.getInstance();
         if(move.resign){
             Log.d(TAG, move.player + " resign");
+            if (move.player.equals("w")) {
+                MainActivity.getInstance().printBlackWins();
+            } else {
+                MainActivity.getInstance().printWhiteWins();
+            }
         } else if(move.draw) {
             Log.d(TAG, move.player + " draw");
+            cv.draw = true;
+            MainActivity.getInstance().printDraw();
         } else {
             Log.d(TAG, move.player + " " + cv.getMove(move.fromCol, move.fromRow, move.toCol, move.toRow));
             int piece = cv.ChessBoard[move.fromRow][move.fromCol];
             cv.ChessBoard[move.fromRow][move.fromCol] = 0;
             cv.ChessBoard[move.toRow][move.toCol] = piece;
+            cv.executeMove(cv.getMove(move.fromCol, move.fromRow, move.toCol, move.toRow), move.player);
             cv.invalidate();
+
+            chess.Board.checkmate();
+
+            if (chess.Board.isWhiteCheckmate() || chess.Board.isBlackCheckmate()) {
+                MainActivity.getInstance().printCheckmate();
+
+                if (chess.Board.isBlackCheckmate()) {
+                    MainActivity.getInstance().printWhiteWins();
+                } else if (chess.Board.isWhiteCheckmate()) {
+                    MainActivity.getInstance().printBlackWins();
+                }
+            }
+            if (chess.Board.isWhiteCheck() || chess.Board.isBlackCheck()) {
+                MainActivity.getInstance().printCheck();
+
+            }
         }
 
         moveIndex++;
