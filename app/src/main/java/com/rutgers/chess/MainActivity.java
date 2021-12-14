@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -72,18 +73,21 @@ public class MainActivity extends AppCompatActivity {
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 ChessView cv  = findViewById(R.id.chess_view);
+                                ChessView inst = ChessView.getInstance();
+                                ArrayList<ChessMove> save = inst.getSave();
+
                                 cv.draw = true;
                                 if(cv.isWhiteMove) {
                                     cv.executeMove("draw", "w");
                                     ChessMove cm = new ChessMove("w");
                                     cm.setDraw();
-                                    cv.save.add(cm);
+                                    inst.addToSave(cm);
 
                                 } else {
                                     cv.executeMove("draw", "b");
                                     ChessMove cm = new ChessMove("b");
                                     cm.setDraw();
-                                    cv.save.add(cm);
+                                    inst.addToSave(cm);
                                 }
                             }
                         })
@@ -97,16 +101,19 @@ public class MainActivity extends AppCompatActivity {
         resignButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 ChessView cv  = findViewById(R.id.chess_view);
+                ChessView inst = ChessView.getInstance();
+                ArrayList<ChessMove> save = inst.getSave();
+
                 if(cv.isWhiteMove) {
                     cv.executeMove("resign", "w");
                     ChessMove cm = new ChessMove("w");
                     cm.setResign();
-                    cv.save.add(cm);
+                    inst.addToSave(cm);
                 } else {
                     cv.executeMove("resign", "b");
                     ChessMove cm = new ChessMove("b");
                     cm.setResign();
-                    cv.save.add(cm);
+                    inst.addToSave(cm);
                 }
             }
         });
@@ -114,25 +121,31 @@ public class MainActivity extends AppCompatActivity {
         playBackButton = findViewById(R.id.playback_button);
         playBackButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String storeDir = "data";
-                ArrayList<ChessMove> moves = new ArrayList<ChessMove>();
 
-                try {
-                    FileInputStream fis = new FileInputStream(storeDir + File.separator + "hello.dat");
-                    ObjectInputStream ois = new ObjectInputStream(fis);
 
-                    moves = (ArrayList) ois.readObject();
-
-                    ois.close();
-                    fis.close();
-                }  catch (IOException ioe) {
-                    MainActivity.getInstance().printCorruptSave();
-                }  catch (ClassNotFoundException c)  {
-                    MainActivity.getInstance().printCorruptSave();
-                }
             }
         });
+
+        if (shouldAskPermissions()) {
+            askPermissions();
+        }
     }
+
+    protected boolean shouldAskPermissions() {
+        return (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1);
+    }
+
+    protected void askPermissions() {
+        String[] permissions = {
+                "android.permission.READ_EXTERNAL_STORAGE",
+                "android.permission.WRITE_EXTERNAL_STORAGE"
+        };
+        int requestCode = 200;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(permissions, requestCode);
+        }
+    }
+
     public static MainActivity getInstance() {
         return instance;
     }

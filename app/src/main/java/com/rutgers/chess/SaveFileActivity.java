@@ -1,21 +1,29 @@
 package com.rutgers.chess;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.rutgers.chess.Util.ChessMove;
 import com.rutgers.chess.view.ChessView;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 public class SaveFileActivity extends AppCompatActivity {
     private final String TAG = "SaveFileActivity";
@@ -35,21 +43,51 @@ public class SaveFileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(editFileName.getText().length()>0) {
-                    String name = editFileName.getText().toString().trim()+".dat";
+                    String name = editFileName.getText().toString().trim()+".save";
 
                     //Save
-                    ChessView cv = findViewById(R.id.chess_view);
-                    String storeDir = "data";
+                    ChessView cv = ChessView.getInstance();
+                    ArrayList<ChessMove> save = cv.getSave();
+
+                    File file = new File(getApplicationContext().getFilesDir(), name);
                     try {
-                        File file = new File(storeDir + File.separator + name);
-                        FileOutputStream fos = getApplicationContext().openFileOutput(storeDir + File.separator +name, Context.MODE_PRIVATE);
+                        file.createNewFile();
+                    } catch (IOException ioe) {
+                        MainActivity.getInstance().printCorruptSave();
+                    }
+
+                    Log.d(TAG, file.canWrite()+"");
+                    Log.d(TAG, file.getAbsolutePath());
+
+                    try {
+//                        FileOutputStream fos = getApplicationContext().openFileOutput(file.getAbsolutePath(), Context.MODE_PRIVATE);
+                        FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
                         ObjectOutputStream oos = new ObjectOutputStream(fos);
-                        oos.writeObject(cv.save);
+                        oos.writeObject(save);
                         oos.close();
                         fos.close();
                     } catch (IOException ioe) {
                         MainActivity.getInstance().printCorruptSave();
                     }
+
+                    //This is just to test reading
+                    ArrayList<ChessMove> moves = new ArrayList<ChessMove>();
+                    try {
+//                        FileInputStream fis = getApplicationContext().openFileInput(getApplicationContext().getFilesDir() + "/" + name);
+                        FileInputStream fis = new FileInputStream(getApplicationContext().getFilesDir() + "/" + name);
+                        ObjectInputStream ois = new ObjectInputStream(fis);
+
+                        moves = (ArrayList) ois.readObject();
+
+                        ois.close();
+                        fis.close();
+                    }  catch (IOException ioe) {
+                        MainActivity.getInstance().printCorruptSave();
+                    }
+                    catch (ClassNotFoundException c)  {
+                        MainActivity.getInstance().printCorruptSave();
+                    }
+                    //This is just to test reading
 
                     cv.reset();
                     Intent intent = new Intent(MainActivity.getInstance(), ChessView.class);

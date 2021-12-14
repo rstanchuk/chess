@@ -29,6 +29,7 @@ import java.util.HashMap;
 
 public class ChessView extends View {
     private final String TAG = "ChessView";
+    private static ChessView instance;
     private static final int originX = 3; //origin position x
     private static final int originY = 3; //origin position y
     private static final int squareLength = 95; //length of the square
@@ -68,8 +69,21 @@ public class ChessView extends View {
 
     public ArrayList<ChessMove> save = new ArrayList<ChessMove>();
 
+    public void addToSave(ChessMove move) {
+        save.add(move);
+    }
+
+    public ArrayList<ChessMove> getSave() {
+        return save;
+    }
+
+    public static ChessView getInstance() {
+        return instance;
+    }
+
     public ChessView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        instance = this;
         //start pieces
 
         ChessBoard[0][0] = R.drawable.chess_rdt60;
@@ -466,6 +480,7 @@ public class ChessView extends View {
         if(event == null) {
             return false;
         }
+
         if(run) {
             switch(event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
