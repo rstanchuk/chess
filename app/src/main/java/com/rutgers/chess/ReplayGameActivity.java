@@ -78,6 +78,9 @@ public class ReplayGameActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        ChessView cv = ChessView.getInstance();
+        cv.run = false;
     }
 
     public static ReplayGameActivity getInstance() {
