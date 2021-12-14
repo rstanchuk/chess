@@ -124,6 +124,7 @@ public class ReplayGameActivity extends AppCompatActivity {
                 } else if (chess.Board.isWhiteCheckmate()) {
                     MainActivity.getInstance().printBlackWins();
                 }
+                chess.Board.resetCheck();
             }
             if (chess.Board.isWhiteCheck() || chess.Board.isBlackCheck()) {
                 MainActivity.getInstance().printCheck();

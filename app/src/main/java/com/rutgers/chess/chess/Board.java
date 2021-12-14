@@ -18,6 +18,13 @@ public class Board {
 	private static boolean isWhiteCheck = false;
 	private static boolean isBlackCheck = false;
 
+	public static void resetCheck() {
+		isWhiteCheckmate = false;
+		isBlackCheckmate = false;
+		isWhiteCheck = false;
+		isBlackCheck = false;
+	}
+
 	private static int wKingRank = 7; // keep the rank of the white king
 	private static int bKingRank = 0; // keep the rank of the black king
 	private static int wKingFile = 4; // keep the file of the white king
