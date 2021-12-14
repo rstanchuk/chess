@@ -83,24 +83,24 @@ public class Queen extends Piece {
 			// check if there is any "roadblock"
 			if (originRank == destinationRank) {
 				if (originFile < destinationFile) {
-					for (int file = originFile + 1; file < destinationFile - 1; file++) {
+					for (int file = originFile + 1; file < destinationFile; file++) {
 						isBlockFree = isBlockFree && square[originRank][file].isEmpty();
 					}
 
 				} else {
-					for (int file = destinationFile + 1; file < originFile - 1; file++) {
+					for (int file = destinationFile + 1; file < originFile; file++) {
 						isBlockFree = isBlockFree && square[originRank][file].isEmpty();
 					}
 				}
 
 			} else if (originFile == destinationFile) {
 				if (originRank < destinationRank) {
-					for (int rank = originRank + 1; rank < destinationRank - 1; rank++) {
+					for (int rank = originRank + 1; rank < destinationRank; rank++) {
 						isBlockFree = isBlockFree && square[rank][originFile].isEmpty();
 					}
 
 				} else {
-					for (int rank = destinationRank + 1; rank < originRank - 1; rank++) {
+					for (int rank = destinationRank + 1; rank < originRank; rank++) {
 						isBlockFree = isBlockFree && square[rank][originFile].isEmpty();
 					}
 				}
