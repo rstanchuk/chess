@@ -21,6 +21,12 @@ import android.widget.Toast;
 import com.rutgers.chess.Util.ChessMove;
 import com.rutgers.chess.view.ChessView;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
     private final String TAG = "MainActivity";
     ChessView chessView;
@@ -30,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private Button aiButton;
     private Button drawButton;
     private Button resignButton;
+    private Button playBackButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +107,28 @@ public class MainActivity extends AppCompatActivity {
                     ChessMove cm = new ChessMove("b");
                     cm.setResign();
                     cv.save.add(cm);
+                }
+            }
+        });
+
+        playBackButton = findViewById(R.id.playback_button);
+        playBackButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String storeDir = "data";
+                ArrayList<ChessMove> moves = new ArrayList<ChessMove>();
+
+                try {
+                    FileInputStream fis = new FileInputStream(storeDir + File.separator + "hello.dat");
+                    ObjectInputStream ois = new ObjectInputStream(fis);
+
+                    moves = (ArrayList) ois.readObject();
+
+                    ois.close();
+                    fis.close();
+                }  catch (IOException ioe) {
+                    MainActivity.getInstance().printCorruptSave();
+                }  catch (ClassNotFoundException c)  {
+                    MainActivity.getInstance().printCorruptSave();
                 }
             }
         });

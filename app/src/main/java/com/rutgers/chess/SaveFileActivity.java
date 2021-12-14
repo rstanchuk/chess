@@ -5,14 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.rutgers.chess.Util.Util;
 import com.rutgers.chess.view.ChessView;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 public class SaveFileActivity extends AppCompatActivity {
     private final String TAG = "SaveFileActivity";
@@ -33,11 +36,20 @@ public class SaveFileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(editFileName.getText().length()>0) {
                     String name = editFileName.getText().toString().trim()+".dat";
-                    Log.d(TAG, name);
 
                     //Save
                     ChessView cv = findViewById(R.id.chess_view);
-                    Util.writeSave(cv.save, name);
+                    String storeDir = "data";
+                    try {
+                        File file = new File(storeDir + File.separator + name);
+                        FileOutputStream fos = getApplicationContext().openFileOutput(storeDir + File.separator +name, Context.MODE_PRIVATE);
+                        ObjectOutputStream oos = new ObjectOutputStream(fos);
+                        oos.writeObject(cv.save);
+                        oos.close();
+                        fos.close();
+                    } catch (IOException ioe) {
+                        MainActivity.getInstance().printCorruptSave();
+                    }
 
                     cv.reset();
                     Intent intent = new Intent(MainActivity.getInstance(), ChessView.class);
