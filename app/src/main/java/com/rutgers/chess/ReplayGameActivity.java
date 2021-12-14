@@ -54,9 +54,7 @@ public class ReplayGameActivity extends AppCompatActivity {
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChessView cv = ChessView.getInstance();
-                cv.reset();
-                Intent intent = new Intent(MainActivity.getInstance(), MainActivity.class);
+                Intent intent = new Intent(MainActivity.getInstance(), ListSavesActivity.class);
                 startActivity(intent);
             }
         });
@@ -95,6 +93,7 @@ public class ReplayGameActivity extends AppCompatActivity {
         ChessView cv = ChessView.getInstance();
         if(move.resign){
             Log.d(TAG, move.player + " resign");
+            MainActivity.getInstance().printResign();
             if (move.player.equals("w")) {
                 MainActivity.getInstance().printBlackWins();
             } else {
@@ -125,7 +124,6 @@ public class ReplayGameActivity extends AppCompatActivity {
             }
             if (chess.Board.isWhiteCheck() || chess.Board.isBlackCheck()) {
                 MainActivity.getInstance().printCheck();
-
             }
         }
 
