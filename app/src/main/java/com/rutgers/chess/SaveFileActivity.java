@@ -83,6 +83,8 @@ public class SaveFileActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ChessView cv = ChessView.getInstance();
+                cv.reset();
                 Intent intent = new Intent(MainActivity.getInstance(), MainActivity.class);
                 startActivity(intent);
             }

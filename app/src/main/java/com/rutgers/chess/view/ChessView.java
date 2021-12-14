@@ -125,6 +125,10 @@ public class ChessView extends View {
         prevChessBoard = copyChessBoard(ChessBoard);
 
         chess.Board.createBoard();
+
+        isWhiteMove = true;
+        run = true;
+        draw = false;
     }
 
     public void reset() {
