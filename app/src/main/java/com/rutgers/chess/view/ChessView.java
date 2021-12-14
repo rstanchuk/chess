@@ -213,6 +213,8 @@ public class ChessView extends View {
                     invalidate();
                     aiMove = false;
 
+                    MainActivity.getInstance().undoButton.setEnabled(true);
+
                     chess.Board.checkmate();
 
                     if (chess.Board.isWhiteCheckmate() || chess.Board.isBlackCheckmate()) {
@@ -483,6 +485,7 @@ public class ChessView extends View {
                                 movingPiece = piece;
 
                                 save.add(new ChessMove(fromCol, fromRow, col, row, "w"));
+                                MainActivity.getInstance().undoButton.setEnabled(true);
                             }
                         } else {
                             if (executeMove(move, "b")) {
@@ -518,6 +521,7 @@ public class ChessView extends View {
                                 Log.d(TAG, move);
 
                                 save.add(new ChessMove(fromCol, fromRow, col, row, "b"));
+                                MainActivity.getInstance().undoButton.setEnabled(true);
                             }
                         }
 

@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     ChessView chessView;
     private static MainActivity instance;
 
-    private Button undoButton;
+    public Button undoButton;
     private Button aiButton;
     private Button drawButton;
     private Button resignButton;
@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 cv.undo();
             }
         });
+        undoButton.setEnabled(false);
 
         aiButton = findViewById(R.id.ai_button);
         aiButton.setOnClickListener(new View.OnClickListener() {
