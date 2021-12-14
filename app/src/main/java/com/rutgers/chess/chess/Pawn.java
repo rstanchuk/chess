@@ -14,7 +14,7 @@ public class Pawn extends Piece {
 	 * only first move is allowed 2 positions.
 	 */
 	private boolean isFirstMove = true;
-
+    private boolean isEnpassantRisk=false;
 	/**
 	 * check if first move
 	 * @return boolean value
