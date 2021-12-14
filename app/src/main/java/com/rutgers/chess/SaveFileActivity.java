@@ -67,7 +67,7 @@ public class SaveFileActivity extends AppCompatActivity {
                     }
 
                     cv.reset();
-                    Intent intent = new Intent(MainActivity.getInstance(), ChessView.class);
+                    Intent intent = new Intent(MainActivity.getInstance(), MainActivity.class);
                     startActivity(intent);
                 } else {
                     Context context = getApplicationContext();
@@ -83,7 +83,7 @@ public class SaveFileActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.getInstance(), ChessView.class);
+                Intent intent = new Intent(MainActivity.getInstance(), MainActivity.class);
                 startActivity(intent);
             }
         });

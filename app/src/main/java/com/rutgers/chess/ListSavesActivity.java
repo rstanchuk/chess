@@ -48,7 +48,7 @@ public class ListSavesActivity extends AppCompatActivity {
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.getInstance(), ChessView.class);
+                Intent intent = new Intent(MainActivity.getInstance(), MainActivity.class);
                 startActivity(intent);
             }
         });
