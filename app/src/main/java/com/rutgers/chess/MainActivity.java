@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -121,8 +122,12 @@ public class MainActivity extends AppCompatActivity {
         playBackButton = findViewById(R.id.playback_button);
         playBackButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                File[] files = new File(getApplicationContext().getFilesDir().toString()).listFiles();
+                for(int i = 0; i < files.length; i++) {
+                    Log.d(TAG, files[i].getName());
+                }
 
-
+                openListSavesWindow();
             }
         });
 
@@ -223,6 +228,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void openSaveFileWindow() {
         Intent intent = new Intent(this, SaveFileActivity.class);
+        startActivity(intent);
+    }
+
+    public void openListSavesWindow() {
+        Intent intent = new Intent(this, ListSavesActivity.class);
         startActivity(intent);
     }
 
